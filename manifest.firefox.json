@@ -1,0 +1,49 @@
+{
+  "manifest_version": 2,
+  "name": "FocusFeed",
+  "version": "0.1.0",
+  "description": "Show or hide specific UI sections and pages across major social media platforms.",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "browser_action": {
+    "default_popup": "src/popup/index.html",
+    "default_title": "FocusFeed"
+  },
+  "permissions": ["storage", "tabs", "https://returnyoutubedislikeapi.com/*"],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "focusfeed@local"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.youtube.com/*"],
+      "js": ["src/content/youtube.ts"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://*.instagram.com/*"],
+      "js": ["src/content/instagram.ts"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://*.twitter.com/*", "*://*.x.com/*"],
+      "js": ["src/content/twitter.ts"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://*.reddit.com/*"],
+      "js": ["src/content/reddit.ts"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://*.linkedin.com/*"],
+      "js": ["src/content/linkedin.ts"],
+      "run_at": "document_start"
+    }
+  ]
+}
