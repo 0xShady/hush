@@ -1,6 +1,3 @@
-// UI metadata: display names, feature labels, landing-page options per platform.
-// Mirrors the Feature Map in CLAUDE.md. Single source for popup rendering.
-
 import type { PlatformKey } from "./types";
 
 export type FeatureMeta = { key: string; label: string };

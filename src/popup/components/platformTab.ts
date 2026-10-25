@@ -1,5 +1,3 @@
-// Renders one platform's panel: master toggle, landing dropdown, feature toggles.
-
 import type { PlatformKey, PlatformSettings } from '../../shared/types';
 import { PLATFORM_CONFIG } from '../../shared/platformConfig';
 import { toggleRow } from './toggleRow';
@@ -17,7 +15,6 @@ export function platformTab(opts: PlatformTabOpts): HTMLElement {
   const panel = document.createElement('section');
   panel.className = 'platform-panel';
 
-  // Master enable/disable.
   panel.append(
     toggleRow({
       label: `Enable ${config.name}`,
@@ -26,7 +23,6 @@ export function platformTab(opts: PlatformTabOpts): HTMLElement {
     }),
   );
 
-  // Landing page dropdown.
   const landingWrap = document.createElement('div');
   landingWrap.className = 'landing-row';
   if (!settings.enabled) landingWrap.classList.add('is-disabled');
@@ -50,7 +46,7 @@ export function platformTab(opts: PlatformTabOpts): HTMLElement {
   landingWrap.append(landingLabel, select);
   panel.append(landingWrap);
 
-  // Feature toggles — greyed when master is off.
+  // Feature toggles are greyed out while the master toggle is off.
   const list = document.createElement('div');
   list.className = 'feature-list';
   for (const feat of config.features) {

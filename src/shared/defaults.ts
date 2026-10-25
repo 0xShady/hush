@@ -1,5 +1,3 @@
-// Default settings values.
-
 import type { Settings } from './types';
 
 export const DEFAULT_SETTINGS: Settings = {

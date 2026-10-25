@@ -1,11 +1,9 @@
-// Typed get/set/onChange wrappers over browser.storage.sync.
-
 import browser from 'webextension-polyfill';
 import type { PlatformKey, PlatformSettings, Settings } from './types';
 import { DEFAULT_SETTINGS } from './defaults';
 import { PLATFORM_KEYS } from './types';
 
-const STORAGE_KEY = 'focusfeed:settings';
+const STORAGE_KEY = 'hush:settings';
 
 // True after the host extension is reloaded/uninstalled. Existing content
 // scripts keep running but every browser.* call throws "Extension context
@@ -61,7 +59,6 @@ export async function setSettings(settings: Settings): Promise<void> {
   }
 }
 
-// Convenience: patch a single platform and persist.
 export async function setPlatformSettings(
   key: PlatformKey,
   patch: Partial<PlatformSettings>,
@@ -75,7 +72,6 @@ export async function setPlatformSettings(
   return next;
 }
 
-// Fires callback with fresh, default-merged settings whenever they change.
 export function onSettingsChange(cb: (settings: Settings) => void): () => void {
   if (!contextAlive()) return () => {};
   const listener = (

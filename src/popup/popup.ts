@@ -1,5 +1,3 @@
-// FocusFeed popup entry point. Renders platform tabs + active panel, wired to storage.
-
 import browser from 'webextension-polyfill';
 import type { PlatformKey, Settings } from '../shared/types';
 import { PLATFORM_KEYS } from '../shared/types';
@@ -36,9 +34,9 @@ async function pingActiveTab(): Promise<void> {
     const tabs = await browser.tabs.query({ active: true, currentWindow: true });
     const tabId = tabs[0]?.id;
     if (tabId == null) return;
-    await browser.tabs.sendMessage(tabId, { type: 'focusfeed:refresh' });
+    await browser.tabs.sendMessage(tabId, { type: 'hush:refresh' });
   } catch {
-    /* tab without content script or context issue — storage event is the fallback */
+    /* tab has no content script; the storage event is the fallback */
   }
 }
 
@@ -47,7 +45,6 @@ const app = document.getElementById('app')!;
 function render() {
   app.replaceChildren();
 
-  // Tab bar.
   const tabs = document.createElement('nav');
   tabs.className = 'tabs';
   for (const key of PLATFORM_KEYS) {
@@ -63,7 +60,6 @@ function render() {
   }
   app.append(tabs);
 
-  // Active platform panel.
   app.append(
     platformTab({
       platform: active,
