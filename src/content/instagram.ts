@@ -1,5 +1,3 @@
-// Instagram content script — 5 features + redirect (via shared runtime).
-
 import type { PlatformSettings } from '../shared/types';
 import {
   SELECTORS,
@@ -14,7 +12,7 @@ function buildCss(p: PlatformSettings): string {
   const f = p.features;
   return [
     hideRule(SELECTORS.reelsNav, f.hideReels),
-    // Stories wrapper marked by JS — hide the whole section so arrows + ring borders collapse.
+    // Stories wrapper marked by JS: hide the whole section so arrows and ring borders collapse.
     hideRule(`[${STORIES_ATTR}]`, f.hideStories),
     hideRule(SELECTORS.feedVideoArticle, f.hideReelsInFeed),
     // Articles marked as ad/suggested: collapse in place (no display:none).
@@ -46,10 +44,8 @@ function applyDom(p: PlatformSettings): void {
   applyArticleMarks(!!f.hideAds, !!f.hideSuggested);
 }
 
-// Find the stories tray via /stories/ links and mark its enclosing <section>.
-// We anchor on the link (stable) rather than on aria/class hooks (rotated).
+// Anchor on the /stories/ link (stable) rather than on aria or class hooks (rotated).
 function applyStoriesMark(on: boolean): void {
-  // Always start by clearing any prior mark so toggling off restores layout.
   for (const el of document.querySelectorAll<HTMLElement>(`[${STORIES_ATTR}]`)) {
     el.removeAttribute(STORIES_ATTR);
   }
@@ -58,20 +54,18 @@ function applyStoriesMark(on: boolean): void {
   const link = document.querySelector<HTMLElement>(SELECTORS.storiesAnchor);
   if (!link) return;
 
-  // Prefer the closest <section> — IG wraps the tray in its own section.
+  // Prefer the closest <section>: IG wraps the tray in its own section.
   // Fall back to walking up two ancestors so we catch arrows + ring borders.
   const wrapper =
     link.closest('section') ||
     link.closest('ul')?.parentElement?.parentElement ||
     link.closest('ul')?.parentElement;
   if (!wrapper) return;
-  // Don't grab anything that contains an <article> (feed post) — would nuke feed.
+  // Skip anything that contains an <article> (feed post), or the whole feed would go.
   if (wrapper.querySelector('article')) return;
   wrapper.setAttribute(STORIES_ATTR, '');
 }
 
-// Scan feed articles and mark ad / suggested ones. Clears prior marks each pass
-// so toggling a category off immediately un-hides matching posts.
 function applyArticleMarks(hideAds: boolean, hideSuggested: boolean): void {
   // Clear previous marks so a single rule covers both categories cleanly.
   for (const el of document.querySelectorAll<HTMLElement>(`article[${HIDDEN_ATTR}]`)) {
@@ -80,8 +74,6 @@ function applyArticleMarks(hideAds: boolean, hideSuggested: boolean): void {
   if (!hideAds && !hideSuggested) return;
 
   for (const article of document.querySelectorAll<HTMLElement>(SELECTORS.feedArticle)) {
-    // textContent is cheap relative to the work IG already does; only the
-    // header region matters but a full pass is simpler and still fast.
     const text = article.textContent || '';
     const isAd = hideAds && AD_TEXT.some((t) => text.includes(t));
     const isSuggested =

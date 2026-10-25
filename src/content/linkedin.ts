@@ -1,4 +1,3 @@
-// LinkedIn content script — 7 features (via shared runtime). Hide-only, no redirect.
 // LinkedIn's class names rotate; everything content-specific is matched by text.
 
 import type { PlatformSettings } from '../shared/types';
@@ -45,14 +44,13 @@ function applyDom(p: PlatformSettings): void {
 
   const targets = collectTargets();
   for (const el of targets) {
-    const text = (el.textContent || '').slice(0, 800); // cap to avoid O(huge) scans
+    const text = (el.textContent || '').slice(0, 800);
     if (groups.some((g) => g.texts.some((t) => text.includes(t)))) {
       el.setAttribute(HIDDEN_ATTR, '');
     }
   }
 }
 
-// Build a de-duplicated set of candidate elements to scan.
 function collectTargets(): HTMLElement[] {
   const seen = new Set<HTMLElement>();
   const push = (list: NodeListOf<HTMLElement>) => {

@@ -1,6 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "FocusFeed",
+  "name": "Hush: quiet your social feeds",
+  "short_name": "Hush",
   "version": "0.1.0",
   "description": "Show or hide specific UI sections and pages across major social media platforms.",
   "icons": {
@@ -11,7 +12,7 @@
   },
   "action": {
     "default_popup": "src/popup/index.html",
-    "default_title": "FocusFeed"
+    "default_title": "Hush"
   },
   "permissions": ["storage", "tabs"],
   "host_permissions": ["https://returnyoutubedislikeapi.com/*"],
