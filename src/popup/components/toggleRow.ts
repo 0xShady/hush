@@ -1,5 +1,3 @@
-// Single toggle row: label + switch. Fires onChange immediately.
-
 export type ToggleRowOpts = {
   label: string;
   checked: boolean;

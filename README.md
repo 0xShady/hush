@@ -2,7 +2,7 @@
 
 Browser extension to show/hide UI sections and pages across YouTube, Instagram,
 Twitter/X, Reddit, and LinkedIn. All control via a popup with per-platform toggles
-and a landing-page dropdown. No AI, no analytics, no backend — pure DOM manipulation
+and a landing-page dropdown. No AI, no analytics, no backend: pure DOM manipulation
 + `chrome.storage.sync`.
 
 ## Install (dev)
@@ -32,7 +32,7 @@ npm run build          # → dist/chrome (MV3) + dist/firefox (MV2)
 | `src/shared/defaults.ts` | `DEFAULT_SETTINGS` |
 | `src/shared/storage.ts` | Typed `getSettings` / `setSettings` / `setPlatformSettings` / `onSettingsChange` over `storage.sync` (merges stored over defaults) |
 | `src/shared/platformConfig.ts` | UI metadata: names, feature labels, landing options |
-| `src/shared/selectors/*.selectors.ts` | **All CSS selectors live here** — one file per platform |
+| `src/shared/selectors/*.selectors.ts` | **All CSS selectors live here**, one file per platform |
 | `src/content/runtime.ts` | Shared plumbing: CSS injection, MutationObserver, redirect, `onSettingsChange` wiring |
 | `src/content/<platform>.ts` | Per-platform feature logic (`buildCss` / `applyDom` / `redirect`) |
 | `src/popup/` | Vanilla-TS popup: tabs, master toggle, landing dropdown, feature toggles |
@@ -41,10 +41,10 @@ npm run build          # → dist/chrome (MV3) + dist/firefox (MV2)
 
 `runContentScript({ platform, buildCss, applyDom?, redirect? })`:
 
-1. **redirect** — runs on URL change; returns a path to navigate to, or `null`.
-2. **buildCss** — returns a CSS string (via `hideRule(selector, on)`) injected into one
+1. **redirect**: runs on URL change; returns a path to navigate to, or `null`.
+2. **buildCss**: returns a CSS string (via `hideRule(selector, on)`) injected into one
    `<style>` tag. CSS auto-applies to future DOM nodes, so most hiding needs no observer.
-3. **applyDom** — imperative per-pass work (move comments, pause autoplay, click a tab)
+3. **applyDom**: imperative per-pass work (move comments, pause autoplay, click a tab)
    re-run on every mutation.
 
 Disabling a platform clears its injected CSS. Toggling in the popup fires
@@ -61,12 +61,12 @@ When a platform ships a DOM change and a feature stops working:
 4. `npm run build` and reload the extension.
 
 Text-based markers (e.g. "Sponsored", "People you may know") live as exported arrays
-at the bottom of the relevant selector file — add localized strings there.
+at the bottom of the relevant selector file; add localized strings there.
 
 ## Icons
 
 - Vector source: `src/assets/icons/icon.svg` (feed rows; top rows dissolving = hidden, one row highlighted blue).
-- Shipped PNGs live in `public/icons/` (`icon-16/32/48/128.png`) — Vite copies `public/` verbatim to the build root, and the manifests reference `icons/icon-*.png`.
+- Shipped PNGs live in `public/icons/` (`icon-16/32/48/128.png`). Vite copies `public/` verbatim to the build root, and the manifests reference `icons/icon-*.png`.
 - Regenerate after editing the SVG:
 
   ```bash

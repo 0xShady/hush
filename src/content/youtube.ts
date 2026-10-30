@@ -1,5 +1,3 @@
-// YouTube content script — 6 features + redirect + observer (via shared runtime).
-
 import type { PlatformSettings } from '../shared/types';
 import { SELECTORS } from '../shared/selectors/youtube.selectors';
 import { runContentScript, hideRule } from './runtime';
@@ -26,16 +24,13 @@ function buildCss(p: PlatformSettings): string {
 function applyDom(p: PlatformSettings): void {
   const f = p.features;
 
-  // Comments Beside: move comments into the right rail, side-by-side.
   applyCommentsBeside(!!f.commentsBeeside);
 
-  // Disable Autoplay: click the toggle off if it is currently on.
   if (f.disableAutoplay) {
     const toggle = document.querySelector<HTMLElement>(SELECTORS.autoplayToggleChecked);
     if (toggle) toggle.click();
   }
 
-  // Show Dislike Count: fetch from Return YouTube Dislike API and inject.
   applyDislikeCount(!!f.showDislikeCount);
 }
 
@@ -104,10 +99,9 @@ function formatCount(n: number): string {
   return `${(n / 1_000_000_000).toFixed(1)}B`;
 }
 
-// Comments Beside: side-by-side layout — comments fill the right column at the
-// same height as the player and scroll internally; recommendations relocate
-// under the player so the whole comment thread is reachable without leaving
-// the video viewport.
+// Comments Beside: comments fill the right column at the player's height and
+// scroll internally; recommendations move under the player, so the whole thread
+// is reachable without leaving the video.
 function applyCommentsBeside(on: boolean): void {
   const comments = document.querySelector<HTMLElement>(SELECTORS.comments);
   const related = document.querySelector<HTMLElement>(SELECTORS.related);
@@ -116,13 +110,10 @@ function applyCommentsBeside(on: boolean): void {
   if (!comments || !primary || !secondary) return;
 
   if (on) {
-    // Comments → right column (top).
     if (comments.parentElement !== secondary) secondary.prepend(comments);
-    // Recs → under the player, inside primary column.
     if (related && related.parentElement !== primary) primary.appendChild(related);
     upsertBeesideStyle();
   } else {
-    // Restore original positions.
     if (comments.parentElement === secondary) primary.appendChild(comments);
     if (related && related.parentElement === primary) secondary.appendChild(related);
     document.getElementById(BEESIDE_STYLE_ID)?.remove();
@@ -156,7 +147,6 @@ function upsertBeesideStyle(): void {
       overflow-y: auto !important;
       margin-top: 0 !important;
     }
-    /* Recs now live under the player — give them a little breathing room. */
     ${SELECTORS.primaryInner} > #related { margin-top: 24px !important; }
   `;
   (document.head || document.documentElement).appendChild(style);

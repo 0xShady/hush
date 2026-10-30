@@ -1,5 +1,3 @@
-// Shared TypeScript types for Hush.
-
 export type PlatformKey = 'youtube' | 'instagram' | 'twitter' | 'reddit' | 'linkedin';
 
 export type PlatformSettings = {

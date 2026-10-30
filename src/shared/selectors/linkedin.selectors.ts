@@ -1,4 +1,3 @@
-// LinkedIn DOM selectors — single source of truth.
 // LinkedIn ships hashed CSS-module classes that rotate frequently. Stable hooks:
 //   - `feed-shared-update-v2` for feed cards
 //   - `data-id="urn:li:..."` on activity wrappers
@@ -6,10 +5,8 @@
 // Everything content-specific is matched by text in JS.
 
 export const SELECTORS = {
-  // A single feed post wrapper (multiple variants to catch wrappers + cards).
   feedItem:
     'div.feed-shared-update-v2, [data-urn^="urn:li:activity"], [data-id^="urn:li:activity"], [data-id^="urn:li:aggregate"]',
-  // Right-rail modules (each card-like section we may want to hide).
   asideModule:
     'aside.scaffold-layout__aside section, aside.scaffold-layout__aside > div > div, aside.scaffold-layout__aside .artdeco-card',
   // Inline feed modules that aren't feed posts (PYMK carousels, suggestions injected into the feed).
@@ -19,7 +16,6 @@ export const SELECTORS = {
 
 export const HIDDEN_ATTR = 'data-hush-hidden';
 
-// Text markers used to flag feed cards / aside modules in JS.
 // Keep wide enough to survive minor copy edits.
 export const TEXT_MARKERS = {
   ads: ['Promoted', 'Sponsorisé', 'Anzeige'],

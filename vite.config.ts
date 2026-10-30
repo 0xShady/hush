@@ -20,7 +20,7 @@ const manifest = target === 'firefox'
     : chromeManifest;
 
 // Every Chrome build stamps dev-build.json last, so src/dev/reloader.ts reloads the
-// installed extension once a build is complete — including the final non-dev build,
+// installed extension once a build is complete, including the final non-dev build,
 // which swaps the reloader back out.
 function buildIdStamp(): Plugin {
   return {

@@ -1,5 +1,3 @@
-// Reddit content script — 4 features (via shared runtime). No page-redirect features.
-
 import type { PlatformSettings } from '../shared/types';
 import {
   SELECTORS,
@@ -12,11 +10,9 @@ import { runContentScript, hideRule } from './runtime';
 function buildCss(p: PlatformSettings): string {
   const f = p.features;
   return [
-    // Hard CSS-only hides for elements with stable hooks.
     hideRule(SELECTORS.adMarker, f.hideAds),
     hideRule(SELECTORS.awards, f.hideAwards),
     hideRule(SELECTORS.premiumUpsellHard, f.hidePremiumUpsell),
-    // JS-flagged posts/widgets that need text-based detection.
     hideRule(`[${HIDDEN_ATTR}]`, f.hideAds || f.hidePremiumUpsell),
   ]
     .filter(Boolean)
@@ -38,8 +34,8 @@ function applyDom(p: PlatformSettings): void {
 
 function markAds(): void {
   for (const post of document.querySelectorAll<HTMLElement>(SELECTORS.post)) {
-    // Only scan the post header region — full post text would false-positive on
-    // word "Promoted" appearing in body content.
+    // Only scan the post header: the full post text would false-positive on the
+    // word "Promoted" in body content.
     const head = post.textContent?.slice(0, 200) || '';
     if (AD_TEXT.some((t) => head.includes(t))) {
       post.setAttribute(HIDDEN_ATTR, '');
@@ -48,8 +44,8 @@ function markAds(): void {
 }
 
 function markPremium(): void {
-  // Premium widgets live in the right rail and as inline banners — check small
-  // candidate containers (cards/sections) for premium copy.
+  // Premium widgets show up in the right rail and as inline banners, so check
+  // small candidate containers (cards, sections) for premium copy.
   const candidates = document.querySelectorAll<HTMLElement>(
     'aside section, aside > div, [data-testid*="sidebar"] section, faceplate-tracker',
   );

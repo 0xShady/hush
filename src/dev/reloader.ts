@@ -29,11 +29,11 @@ async function poll(): Promise<void> {
       browser.runtime.reload();
     }
   } catch {
-    // Mid-build: file missing or half-written — try again next tick
+    // Mid-build: file missing or half-written, try again next tick
   }
 }
 
-// Wake on browser start too, not only on install/reload
+// Wake on browser start too, not only on install or reload
 browser.runtime.onStartup.addListener(() => {});
 
 void (async () => {

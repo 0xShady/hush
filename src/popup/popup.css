@@ -1,5 +1,3 @@
-/* Hush popup styles. Respects system dark/light via prefers-color-scheme. */
-
 :root {
   --ff-bg: #ffffff;
   --ff-surface: #f4f5f7;
@@ -38,7 +36,6 @@ body {
   color: var(--ff-text);
 }
 
-/* Tabs */
 .tabs {
   display: flex;
   gap: 2px;
@@ -70,7 +67,6 @@ body {
   border-bottom-color: var(--ff-accent);
 }
 
-/* Panel */
 .platform-panel {
   padding: 12px 14px 18px;
 }
@@ -80,7 +76,6 @@ body {
   border-top: 1px solid var(--ff-border);
 }
 
-/* Toggle row */
 .toggle-row {
   display: flex;
   align-items: center;
@@ -99,7 +94,6 @@ body {
   flex: 1;
 }
 
-/* Switch */
 .switch {
   position: relative;
   flex: 0 0 auto;
@@ -143,7 +137,6 @@ body {
   transform: translateX(16px);
 }
 
-/* Landing dropdown */
 .landing-row {
   display: flex;
   align-items: center;

@@ -1,5 +1,3 @@
-// Twitter / X content script — 5 features + redirect (twitter.com + x.com).
-
 import type { PlatformSettings } from '../shared/types';
 import { SELECTORS, FOLLOWING_TAB_TEXT } from '../shared/selectors/twitter.selectors';
 import { runContentScript, hideRule } from './runtime';

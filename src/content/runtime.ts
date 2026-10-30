@@ -1,13 +1,9 @@
-// Shared content-script runtime: CSS injection, observer, redirect, storage wiring.
-// Each platform script supplies its feature/redirect logic; this handles the plumbing.
-
 import browser from 'webextension-polyfill';
 import type { PlatformKey, PlatformSettings, Settings } from '../shared/types';
 import { getSettings, onSettingsChange, contextAlive } from '../shared/storage';
 
 const STYLE_ID = 'hush-style';
 
-// Upsert a single <style> tag holding all CSS-based hiding rules.
 export function injectCss(css: string): void {
   const parent = document.head || document.documentElement;
   let style = document.getElementById(STYLE_ID) as HTMLStyleElement | null;
@@ -19,17 +15,16 @@ export function injectCss(css: string): void {
   if (style.textContent !== css) style.textContent = css;
 }
 
-// Build a CSS string: hide `selector` when `on` is true.
 export function hideRule(selector: string, on: boolean): string {
   if (!on || !selector) return '';
   return `${selector} { display: none !important; }`;
 }
 
-export type RedirectResult = string | null; // target path, or null = no redirect
+export type RedirectResult = string | null;
 
 export type ContentScript = {
   platform: PlatformKey;
-  // Build CSS from feature flags (auto-applies to future nodes — no observer needed).
+  // CSS from feature flags; applies to future nodes, so no observer is needed.
   buildCss: (p: PlatformSettings) => string;
   // Imperative per-pass work (move DOM, disable autoplay, etc.). Re-run on mutation.
   applyDom?: (p: PlatformSettings) => void;
@@ -47,11 +42,11 @@ export function runContentScript(script: ContentScript): void {
     const p = settings[script.platform];
 
     if (!p.enabled) {
-      injectCss(''); // clear all hiding when platform disabled
+      injectCss('');
       return;
     }
 
-    // Redirect first — only when URL actually changed since last pass.
+    // Redirect first, only when the URL changed since the last pass.
     if (script.redirect && location.href !== lastHref) {
       lastHref = location.href;
       const target = script.redirect(p);
@@ -77,7 +72,6 @@ export function runContentScript(script: ContentScript): void {
     });
   };
 
-  // Initial + storage-change path: refresh from storage, then apply.
   const refresh = async () => {
     if (!contextAlive()) {
       if (cached) apply(cached);
@@ -96,10 +90,9 @@ export function runContentScript(script: ContentScript): void {
   if (document.body) startObserver();
   else document.addEventListener('DOMContentLoaded', startObserver, { once: true });
 
-  // Live sync from popup toggles via storage event.
   onSettingsChange(apply);
 
-  // Belt-and-suspenders: popup also pings the active tab after a write.
+  // The popup also pings the active tab after a write, in case the storage event is missed.
   try {
     browser.runtime.onMessage.addListener((msg: unknown) => {
       if (msg && typeof msg === 'object' && (msg as { type?: string }).type === 'hush:refresh') {
@@ -107,10 +100,9 @@ export function runContentScript(script: ContentScript): void {
       }
     });
   } catch {
-    /* context gone — ignore */
+    /* context gone */
   }
 
-  // Initial run.
   refresh();
 }
 
