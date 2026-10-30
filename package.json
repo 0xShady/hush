@@ -1,5 +1,5 @@
 {
-  "name": "focusfeed",
+  "name": "hush",
   "version": "0.1.0",
   "description": "Browser extension to show/hide UI sections across social media platforms.",
   "type": "module",
@@ -12,8 +12,8 @@
     "watch:chrome": "TARGET=chrome vite build --watch",
     "watch:firefox": "TARGET=firefox vite build --watch",
     "dev:chrome": "DEV_RELOAD=1 TARGET=chrome vite build --watch",
-    "start:chrome": "web-ext run -s dist/chrome -t chromium --chromium-binary '/Applications/Brave Browser.app/Contents/MacOS/Brave Browser' --chromium-profile ~/.focusfeed-dev-profile --profile-create-if-missing --keep-profile-changes --start-url https://youtube.com",
-    "start:firefox": "web-ext run -s dist/firefox --firefox-profile ~/.focusfeed-dev-profile-ff --profile-create-if-missing --keep-profile-changes --start-url https://youtube.com",
+    "start:chrome": "web-ext run -s dist/chrome -t chromium --chromium-binary '/Applications/Brave Browser.app/Contents/MacOS/Brave Browser' --chromium-profile ~/.hush-dev-profile --profile-create-if-missing --keep-profile-changes --start-url https://youtube.com",
+    "start:firefox": "web-ext run -s dist/firefox --firefox-profile ~/.hush-dev-profile-ff --profile-create-if-missing --keep-profile-changes --start-url https://youtube.com",
     "typecheck": "tsc --noEmit",
     "package": "npm run build && npm run package:chrome && npm run package:firefox",
     "package:chrome": "web-ext build -s dist/chrome -a web-ext-artifacts/chrome --overwrite-dest",

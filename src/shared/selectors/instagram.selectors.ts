@@ -14,8 +14,8 @@ export const SELECTORS = {
 } as const;
 
 // Marker attributes managed by the content script.
-export const HIDDEN_ATTR = 'data-focusfeed-hidden';
-export const STORIES_ATTR = 'data-focusfeed-stories';
+export const HIDDEN_ATTR = 'data-hush-hidden';
+export const STORIES_ATTR = 'data-hush-stories';
 
 // Header text used to identify sponsored / suggested posts (text match in JS).
 export const AD_TEXT = ['Sponsored', 'Sponsorisé', 'Patrocinado', 'Werbung'];

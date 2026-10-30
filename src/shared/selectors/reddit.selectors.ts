@@ -19,7 +19,7 @@ export const SELECTORS = {
   videos: 'shreddit-player video, [data-testid="post-container"] video, video',
 } as const;
 
-export const HIDDEN_ATTR = 'data-focusfeed-hidden';
+export const HIDDEN_ATTR = 'data-hush-hidden';
 
 // Text markers used to flag posts / widgets when class hooks miss.
 export const AD_TEXT = ['Promoted', 'Sponsored'];

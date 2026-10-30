@@ -1,4 +1,4 @@
-# FocusFeed
+# Hush
 
 Browser extension to show/hide UI sections and pages across YouTube, Instagram,
 Twitter/X, Reddit, and LinkedIn. All control via a popup with per-platform toggles

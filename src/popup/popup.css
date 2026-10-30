@@ -1,4 +1,4 @@
-/* FocusFeed popup styles. Respects system dark/light via prefers-color-scheme. */
+/* Hush popup styles. Respects system dark/light via prefers-color-scheme. */
 
 :root {
   --ff-bg: #ffffff;

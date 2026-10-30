@@ -17,7 +17,7 @@ export const SELECTORS = {
     '.scaffold-finite-scroll__content > div:not(.feed-shared-update-v2)',
 } as const;
 
-export const HIDDEN_ATTR = 'data-focusfeed-hidden';
+export const HIDDEN_ATTR = 'data-hush-hidden';
 
 // Text markers used to flag feed cards / aside modules in JS.
 // Keep wide enough to survive minor copy edits.

@@ -5,7 +5,7 @@ import browser from 'webextension-polyfill';
 import type { PlatformKey, PlatformSettings, Settings } from '../shared/types';
 import { getSettings, onSettingsChange, contextAlive } from '../shared/storage';
 
-const STYLE_ID = 'focusfeed-style';
+const STYLE_ID = 'hush-style';
 
 // Upsert a single <style> tag holding all CSS-based hiding rules.
 export function injectCss(css: string): void {
@@ -102,7 +102,7 @@ export function runContentScript(script: ContentScript): void {
   // Belt-and-suspenders: popup also pings the active tab after a write.
   try {
     browser.runtime.onMessage.addListener((msg: unknown) => {
-      if (msg && typeof msg === 'object' && (msg as { type?: string }).type === 'focusfeed:refresh') {
+      if (msg && typeof msg === 'object' && (msg as { type?: string }).type === 'hush:refresh') {
         refresh();
       }
     });

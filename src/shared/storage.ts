@@ -5,7 +5,7 @@ import type { PlatformKey, PlatformSettings, Settings } from './types';
 import { DEFAULT_SETTINGS } from './defaults';
 import { PLATFORM_KEYS } from './types';
 
-const STORAGE_KEY = 'focusfeed:settings';
+const STORAGE_KEY = 'hush:settings';
 
 // True after the host extension is reloaded/uninstalled. Existing content
 // scripts keep running but every browser.* call throws "Extension context

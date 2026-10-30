@@ -1,4 +1,4 @@
-// FocusFeed popup entry point. Renders platform tabs + active panel, wired to storage.
+// Hush popup entry point. Renders platform tabs + active panel, wired to storage.
 
 import browser from 'webextension-polyfill';
 import type { PlatformKey, Settings } from '../shared/types';
@@ -36,7 +36,7 @@ async function pingActiveTab(): Promise<void> {
     const tabs = await browser.tabs.query({ active: true, currentWindow: true });
     const tabId = tabs[0]?.id;
     if (tabId == null) return;
-    await browser.tabs.sendMessage(tabId, { type: 'focusfeed:refresh' });
+    await browser.tabs.sendMessage(tabId, { type: 'hush:refresh' });
   } catch {
     /* tab without content script or context issue — storage event is the fallback */
   }

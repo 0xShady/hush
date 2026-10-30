@@ -4,8 +4,8 @@ import type { PlatformSettings } from '../shared/types';
 import { SELECTORS } from '../shared/selectors/youtube.selectors';
 import { runContentScript, hideRule } from './runtime';
 
-const BEESIDE_STYLE_ID = 'focusfeed-yt-beeside';
-const DISLIKE_COUNT_ATTR = 'data-focusfeed-dislike-id';
+const BEESIDE_STYLE_ID = 'hush-yt-beeside';
+const DISLIKE_COUNT_ATTR = 'data-hush-dislike-id';
 const dislikeCache = new Map<string, string>();
 let dislikeInFlight = new Set<string>();
 
@@ -46,7 +46,7 @@ function applyDislikeCount(on: boolean): void {
   if (!on) {
     if (btn.hasAttribute(DISLIKE_COUNT_ATTR)) {
       btn.removeAttribute(DISLIKE_COUNT_ATTR);
-      const label = btn.querySelector('.focusfeed-dislike-count');
+      const label = btn.querySelector('.hush-dislike-count');
       label?.remove();
     }
     return;
@@ -57,7 +57,7 @@ function applyDislikeCount(on: boolean): void {
   if (!videoId) return;
 
   const current = btn.getAttribute(DISLIKE_COUNT_ATTR);
-  if (current === videoId && btn.querySelector('.focusfeed-dislike-count')) return;
+  if (current === videoId && btn.querySelector('.hush-dislike-count')) return;
 
   const cached = dislikeCache.get(videoId);
   if (cached !== undefined) {
@@ -86,10 +86,10 @@ function applyDislikeCount(on: boolean): void {
 
 function renderDislikeCount(btn: HTMLElement, videoId: string, text: string): void {
   btn.setAttribute(DISLIKE_COUNT_ATTR, videoId);
-  let label = btn.querySelector<HTMLElement>('.focusfeed-dislike-count');
+  let label = btn.querySelector<HTMLElement>('.hush-dislike-count');
   if (!label) {
     label = document.createElement('span');
-    label.className = 'focusfeed-dislike-count';
+    label.className = 'hush-dislike-count';
     label.style.marginLeft = '6px';
     label.style.fontWeight = '500';
     btn.appendChild(label);
