@@ -1,12 +1,14 @@
 import type { PlatformSettings } from '../shared/types';
 import {
   SELECTORS,
-  AD_TEXT,
-  SUGGESTED_TEXT,
+  AD_LABELS,
+  SUGGESTED_LABELS,
   HIDDEN_ATTR,
   STORIES_ATTR,
 } from '../shared/selectors/instagram.selectors';
 import { runContentScript, hideRule } from './runtime';
+
+const POST_HEADER_LEAVES = 12;
 
 function buildCss(p: PlatformSettings): string {
   const f = p.features;
@@ -14,7 +16,7 @@ function buildCss(p: PlatformSettings): string {
     hideRule(SELECTORS.reelsNav, f.hideReels),
     // Stories wrapper marked by JS: hide the whole section so arrows and ring borders collapse.
     hideRule(`[${STORIES_ATTR}]`, f.hideStories),
-    hideRule(SELECTORS.feedVideoArticle, f.hideReelsInFeed),
+    hideRule(SELECTORS.feedReelArticle, f.hideReelsInFeed),
     // Articles marked as ad/suggested: collapse in place (no display:none).
     // display:none triggers IG's virtualization to reshuffle scroll math →
     // jumpy feed + huge gaps. Zero-height-but-in-flow keeps anchors stable.
@@ -44,25 +46,22 @@ function applyDom(p: PlatformSettings): void {
   applyArticleMarks(!!f.hideAds, !!f.hideSuggested);
 }
 
-// Anchor on the /stories/ link (stable) rather than on aria or class hooks (rotated).
 function applyStoriesMark(on: boolean): void {
   for (const el of document.querySelectorAll<HTMLElement>(`[${STORIES_ATTR}]`)) {
     el.removeAttribute(STORIES_ATTR);
   }
   if (!on) return;
 
-  const link = document.querySelector<HTMLElement>(SELECTORS.storiesAnchor);
-  if (!link) return;
-
-  // Prefer the closest <section>: IG wraps the tray in its own section.
-  // Fall back to walking up two ancestors so we catch arrows + ring borders.
-  const wrapper =
-    link.closest('section') ||
-    link.closest('ul')?.parentElement?.parentElement ||
-    link.closest('ul')?.parentElement;
-  if (!wrapper) return;
-  // Skip anything that contains an <article> (feed post), or the whole feed would go.
-  if (wrapper.querySelector('article')) return;
+  const tray = [...document.querySelectorAll<HTMLElement>(SELECTORS.storiesList)].find((ul) => !ul.closest('article'));
+  if (!tray) return;
+  // The tray and its scroll arrow share the parent of the presentation box.
+  let wrapper = tray.closest('[role="presentation"]')?.parentElement ?? tray.parentElement;
+  // Never a box that holds feed posts, or the whole feed would go.
+  if (!wrapper || wrapper.querySelector('article')) return;
+  // Its single-child ancestors keep a fixed height; hide the outermost one so no gap is left.
+  while (wrapper.parentElement && wrapper.parentElement.children.length === 1 && !wrapper.parentElement.querySelector('article')) {
+    wrapper = wrapper.parentElement;
+  }
   wrapper.setAttribute(STORIES_ATTR, '');
 }
 
@@ -74,12 +73,23 @@ function applyArticleMarks(hideAds: boolean, hideSuggested: boolean): void {
   if (!hideAds && !hideSuggested) return;
 
   for (const article of document.querySelectorAll<HTMLElement>(SELECTORS.feedArticle)) {
-    const text = article.textContent || '';
-    const isAd = hideAds && AD_TEXT.some((t) => text.includes(t));
-    const isSuggested =
-      hideSuggested && SUGGESTED_TEXT.some((t) => text.includes(t));
+    const header = headerLabels(article);
+    const isAd = hideAds && header.some((t) => AD_LABELS.includes(t));
+    const isSuggested = hideSuggested && header.some((t) => SUGGESTED_LABELS.includes(t));
     if (isAd || isSuggested) article.setAttribute(HIDDEN_ATTR, '');
   }
+}
+
+// Text of the first leaf nodes of a post: author, labels ("Ad", "Suggested for you"), not the caption.
+function headerLabels(article: HTMLElement): string[] {
+  const out: string[] = [];
+  for (const el of article.querySelectorAll('span, a, div')) {
+    if (el.childElementCount > 0) continue;
+    const text = el.textContent?.trim();
+    if (text) out.push(text);
+    if (out.length >= POST_HEADER_LEAVES) break;
+  }
+  return out;
 }
 
 function redirect(p: PlatformSettings): string | null {
