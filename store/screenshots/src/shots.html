@@ -24,15 +24,34 @@ p.lead { margin: 18px 0 0; font-size: 21px; line-height: 1.45; color: #56625F; m
 #s2 ul { margin: 28px 0 0; padding: 0; list-style: none; font-size: 20px; line-height: 1.9; }
 #s2 li::before { content: ''; display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #1F6F65; margin-right: 14px; vertical-align: 2px; }
 
-#s3 { flex-direction: column; align-items: center; padding-top: 56px; }
-#s3 .row { display: flex; gap: 34px; margin-top: 44px; }
-#s3 .row img { width: 360px; }
+#s3 { align-items: center; padding: 0 0 0 90px; }
+#s3 .text { width: 470px; flex: none; }
+#s3 .chips { display: flex; flex-wrap: nowrap; gap: 8px; margin-top: 30px; }
+#s3 .chips span { font-size: 15px; font-weight: 600; padding: 8px 13px; border-radius: 999px; background: #fff; border: 1px solid #D5DFDC; color: #17201E; }
+#s3 .chips span.on { background: #1F6F65; border-color: #1F6F65; color: #fff; }
+#s3 .stage { position: relative; flex: 1; height: 800px; }
+#s3 .stage img { position: absolute; width: 360px; }
+#s3 .back-l { left: -10px; top: 210px; transform: rotate(-7deg); opacity: .96; }
+#s3 .back-r { left: 290px; top: 210px; transform: rotate(7deg); opacity: .96; }
+#s3 .front { left: 140px; top: 170px; z-index: 2; box-shadow: 0 40px 80px -24px rgba(23,32,30,.45), 0 0 0 1px rgba(23,32,30,.08); }
+#s3 .glow { position: absolute; left: 60px; top: 120px; width: 560px; height: 560px; border-radius: 50%; background: radial-gradient(circle, #DDEFEA 0%, rgba(221,239,234,0) 70%); }
 
-#s4 { background: #17544D; color: #fff; align-items: center; padding: 0 100px; gap: 90px; }
+#s4 { background: #17544D; color: #fff; align-items: center; padding: 0 80px 0 90px; gap: 56px; }
+#s4 .text { flex: 1; min-width: 540px; }
+#s4 h1 { font-size: 50px; }
 #s4 h1 em { color: #A9D4CB; }
-#s4 ul { margin: 34px 0 0; padding: 0; list-style: none; font-size: 22px; line-height: 2; color: #DDEFEA; }
-#s4 li::before { content: '✓'; color: #6CC4B4; font-weight: 700; margin-right: 14px; }
-#s4 .badge { width: 300px; height: 300px; flex: none; }
+#s4 p.lead { color: #CFE6E0; max-width: 26ch; font-size: 22px; margin-top: 22px; }
+#s4 .card { width: 490px; flex: none; background: #fff; color: #17201E; border-radius: 24px; padding: 30px 34px 26px; box-shadow: 0 40px 80px -30px rgba(0,0,0,.5); }
+#s4 .card header { display: flex; align-items: center; gap: 14px; padding-bottom: 18px; border-bottom: 2px solid #17201E; }
+#s4 .card header img { width: 44px; height: 44px; }
+#s4 .card header b { font-size: 24px; letter-spacing: -.01em; }
+#s4 .card header small { display: block; font-size: 15px; color: #56625F; font-weight: 500; }
+#s4 dl { margin: 0; }
+#s4 dl div { display: flex; justify-content: space-between; gap: 20px; padding: 13px 0; border-bottom: 1px solid #E1E8E6; font-size: 18px; }
+#s4 dt { color: #56625F; }
+#s4 dd { margin: 0; font-weight: 600; text-align: right; }
+#s4 dd.none { color: #1F6F65; }
+#s4 .card footer { margin-top: 16px; font-size: 15px; color: #56625F; line-height: 1.45; }
 </style></head><body>
 
 <section class="shot" id="s1">
@@ -58,25 +77,37 @@ p.lead { margin: 18px 0 0; font-size: 21px; line-height: 1.45; color: #56625F; m
 </section>
 
 <section class="shot" id="s3">
-  <h1>Five sites, <em>one quiet popup.</em></h1>
-  <p class="lead" style="max-width:none;text-align:center">YouTube, X, Reddit, LinkedIn and Instagram. Light and dark.</p>
-  <div class="row">
-    <img class="pop" src="popup-instagram-dark.png" alt="">
-    <img class="pop" src="popup-x-light.png" alt="">
-    <img class="pop" src="popup-reddit-dark.png" alt="">
+  <div class="text">
+    <span class="pill">Five sites</span>
+    <h1>One quiet popup<br><em>for every feed.</em></h1>
+    <p class="lead">It opens on the site you are on. Each site has its own switches, in light or dark.</p>
+    <div class="chips"><span>YouTube</span><span class="on">X</span><span>Reddit</span><span>LinkedIn</span><span>Instagram</span></div>
+  </div>
+  <div class="stage">
+    <div class="glow"></div>
+    <img class="pop back-l" src="popup-instagram-dark.png" alt="">
+    <img class="pop back-r" src="popup-reddit-dark.png" alt="">
+    <img class="pop front" src="popup-x-light.png" alt="">
   </div>
 </section>
 
 <section class="shot" id="s4">
-  <div>
+  <div class="text">
+    <span class="pill" style="color:#6CC4B4">Privacy</span>
     <h1>Quiet about you, too.<br><em>Nothing to sign up for.</em></h1>
-    <ul>
-      <li>No account, no analytics, no ads</li>
-      <li>No server of its own, nothing sent by default</li>
-      <li>Your switches stay in your browser</li>
-      <li>Not a blocker: every site still works</li>
-    </ul>
+    <p class="lead">Hush works inside your browser. It hides parts of a page and keeps nothing about you.</p>
   </div>
-  <img class="badge" src="hush-icon-reverse.svg" alt="">
+  <div class="card">
+    <header><img src="hush-icon.svg" alt=""><div><b>Hush at a glance</b><small>What it keeps, and what it sends</small></div></header>
+    <dl>
+      <div><dt>Account</dt><dd class="none">None needed</dd></div>
+      <div><dt>Analytics and tracking</dt><dd class="none">None</dd></div>
+      <div><dt>Ads</dt><dd class="none">None</dd></div>
+      <div><dt>Servers</dt><dd class="none">None of its own</dd></div>
+      <div><dt>Your switches</dt><dd>Saved in your browser</dd></div>
+      <div><dt>Data sent</dt><dd>None by default</dd></div>
+    </dl>
+    <footer>The optional YouTube dislike count, off by default, asks Return YouTube Dislike for the video you watch.</footer>
+  </div>
 </section>
 </body></html>
