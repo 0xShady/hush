@@ -1,7 +1,7 @@
 {
   "name": "hush",
   "version": "1.0.0",
-  "description": "Browser extension to show/hide UI sections across social media platforms.",
+  "description": "Hide Shorts, Reels, ads, suggestions and other noise on YouTube, X, Reddit, LinkedIn and Instagram. No account, no tracking.",
   "type": "module",
   "private": true,
   "scripts": {
