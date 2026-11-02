@@ -1,5 +1,6 @@
 import type { PlatformKey, PlatformSettings } from '../../shared/types';
-import { PLATFORM_CONFIG } from '../../shared/platformConfig';
+import { ENABLE_INFO, LANDING_INFO, PLATFORM_CONFIG } from '../../shared/platformConfig';
+import { infoTip } from './infoTip';
 import { toggleRow } from './toggleRow';
 
 export type PlatformTabOpts = {
@@ -15,9 +16,14 @@ export function platformTab(opts: PlatformTabOpts): HTMLElement {
   const panel = document.createElement('section');
   panel.className = 'platform-panel';
 
-  panel.append(
+  const siteGroup = document.createElement('div');
+  siteGroup.className = 'group';
+  panel.append(siteGroup);
+
+  siteGroup.append(
     toggleRow({
       label: `Enable ${config.name}`,
+      info: ENABLE_INFO,
       checked: settings.enabled,
       onChange: (enabled) => onPatch({ enabled }),
     }),
@@ -30,6 +36,7 @@ export function platformTab(opts: PlatformTabOpts): HTMLElement {
   const landingLabel = document.createElement('span');
   landingLabel.className = 'landing-label';
   landingLabel.textContent = 'Landing page';
+  landingLabel.append(infoTip(LANDING_INFO));
 
   const select = document.createElement('select');
   select.className = 'landing-select';
@@ -44,15 +51,16 @@ export function platformTab(opts: PlatformTabOpts): HTMLElement {
   select.addEventListener('change', () => onPatch({ landingPage: select.value }));
 
   landingWrap.append(landingLabel, select);
-  panel.append(landingWrap);
+  siteGroup.append(landingWrap);
 
   // Feature toggles are greyed out while the master toggle is off.
   const list = document.createElement('div');
-  list.className = 'feature-list';
+  list.className = 'group feature-list';
   for (const feat of config.features) {
     list.append(
       toggleRow({
         label: feat.label,
+        info: feat.info,
         checked: !!settings.features[feat.key],
         disabled: !settings.enabled,
         onChange: (val) =>
