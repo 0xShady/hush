@@ -1,24 +1,29 @@
-// LinkedIn ships hashed CSS-module classes that rotate frequently. Stable hooks:
-//   - `feed-shared-update-v2` for feed cards
-//   - `data-id="urn:li:..."` on activity wrappers
-//   - `scaffold-layout__aside` for the right rail
-// Everything content-specific is matched by text in JS.
+// LinkedIn ships hashed class names that rotate. Stable hooks in the current UI:
+//   - [data-testid="mainFeed"] with role="listitem" entries; posts have componentkey="update-card…"
+//   - aside[aria-label] for the left and right rails
+// Hooks from the older UI stay in the lists while LinkedIn still serves it to some accounts.
 
 export const SELECTORS = {
-  feedItem:
-    'div.feed-shared-update-v2, [data-urn^="urn:li:activity"], [data-id^="urn:li:activity"], [data-id^="urn:li:aggregate"]',
-  asideModule:
-    'aside.scaffold-layout__aside section, aside.scaffold-layout__aside > div > div, aside.scaffold-layout__aside .artdeco-card',
-  // Inline feed modules that aren't feed posts (PYMK carousels, suggestions injected into the feed).
-  inlineFeedModule:
-    '.scaffold-finite-scroll__content > div:not(.feed-shared-update-v2)',
+  feedPost:
+    '[data-testid="mainFeed"] [role="listitem"][componentkey^="update-card"], div.feed-shared-update-v2, [data-urn^="urn:li:activity"], [data-id^="urn:li:activity"], [data-id^="urn:li:aggregate"]',
+  // Feed entries that are not posts: suggestion carousels and similar.
+  feedModule:
+    '[data-testid="mainFeed"] [role="listitem"]:not([componentkey^="update-card"]), .scaffold-finite-scroll__content > div:not(.feed-shared-update-v2)',
+  rail: 'aside[aria-label], aside.scaffold-layout__aside',
+  // Right-rail ad slot: the iframe's box, not the footer next to it.
+  railAd: 'aside div:has(> iframe[componentkey$="_ad"]), aside div:has(> iframe[title="advertisement"])',
+  puzzles: '[componentkey="feedRightNavGamesComponentRef"]',
+  navButtons: '[data-testid="primary-nav"] [role="button"], [data-testid="primary-nav"] a, #global-nav a',
+  legacyRailModule: 'aside.scaffold-layout__aside section, aside.scaffold-layout__aside .artdeco-card',
 } as const;
 
 export const HIDDEN_ATTR = 'data-hush-hidden';
 
-// Keep wide enough to survive minor copy edits.
-export const TEXT_MARKERS = {
-  ads: ['Promoted', 'Sponsorisé', 'Anzeige'],
+// Matched exactly against the short labels in a post header.
+export const AD_LABELS = ['Promoted', 'Sponsorisé', 'Anzeige', 'Promocionado', 'Promosso', 'Patrocinado'];
+
+// Titles of sidebar and in-feed modules (matched at the start of a text node), never inside posts.
+export const MODULE_TITLES = {
   pymk: [
     'People you may know',
     'Personnes que vous connaissez peut-être',
@@ -26,37 +31,19 @@ export const TEXT_MARKERS = {
     'Add to your feed',
     'Follow these recommendations',
   ],
-  news: ['LinkedIn News', "Today's news", 'Top stories', 'Top news', 'Trending now'],
-  learning: [
-    'From LinkedIn Learning',
-    'LinkedIn Learning',
-    'Top courses',
-    'Recommended courses',
-  ],
-  addToProfile: [
-    'Add to your profile',
-    'Add skills',
-    'Add a certification',
-    'Add a language',
-    'Add languages',
-    'Complete your profile',
-  ],
-  celebrate: [
-    'work anniversary',
-    'Celebrate',
-    'celebrating',
-    'started a new position',
-    'has a new job',
-    'gave kudos',
-    'Send congrats',
-  ],
-  premium: [
-    'Try Premium',
-    'Retry Premium',
-    'Reactivate Premium',
-    'Premium for free',
-    'free Premium trial',
-    'unlock with Premium',
-    'See who viewed your profile',
-  ],
+  puzzles: ['Today’s puzzles', "Today's puzzles"],
 } as const;
+
+// Short Premium prompt in the top navigation bar ("Retry for MAD 0").
+export const NAV_PREMIUM_TEXT = ['Premium', 'Retry for', 'Try for', 'Reactivate'];
+
+// Matched inside small sidebar and in-feed cards only.
+export const PREMIUM_TEXT = [
+  'Try Premium',
+  'Retry Premium',
+  'Reactivate Premium',
+  'Premium for free',
+  'free Premium trial',
+  'unlock with Premium',
+  'See who viewed your profile',
+];
