@@ -3,13 +3,13 @@
 Browser extension to show/hide UI sections and pages across YouTube, Instagram,
 Twitter/X, Reddit, and LinkedIn. All control via a popup with per-platform toggles
 and a landing-page dropdown. No AI, no analytics, no backend: pure DOM manipulation
-+ `chrome.storage.sync`.
++ `chrome.storage.sync`. Website: https://hush-media.dev
 
 ## Install (dev)
 
 ```bash
 npm install
-npm run build          # → dist/chrome (MV3) + dist/firefox (MV2)
+npm run build          # → dist/chrome + dist/firefox (both Manifest V3)
 ```
 
 - **Chrome**: `chrome://extensions` → enable Developer mode → Load unpacked → `dist/chrome`
@@ -22,7 +22,48 @@ npm run build          # → dist/chrome (MV3) + dist/firefox (MV2)
 | `npm run build` | Build both Chrome + Firefox into `dist/` |
 | `npm run build:chrome` / `build:firefox` | Single target |
 | `npm run typecheck` | `tsc --noEmit` |
-| `npm run package` | Build then zip both via `web-ext` → `web-ext-artifacts/` |
+| `npm run package` | Build then zip both via `web-ext` → `web-ext-artifacts/{chrome,firefox}/hush-<browser>-<version>.zip` |
+| `npm run lint:firefox` | `web-ext lint` on the Firefox build (what addons.mozilla.org runs) |
+| `npm run dev:chrome` | Watch build with an auto-reloading dev worker and a settings bridge for end-to-end tests (dev only) |
+| `npm run release` | Create the GitHub Release for the version in `package.json` (from an up-to-date `main`) |
+
+## Building from source (for add-on reviewers)
+
+Requirements: Node.js 22 and npm 10, on macOS or Linux.
+
+```bash
+npm ci
+npm run build:firefox   # output: dist/firefox (same files as the submitted package)
+```
+
+The source archive attached to each release is `git archive` of the tagged commit.
+
+## Permissions and data
+
+- `storage`: remembers the switches (`storage.sync`).
+- `activeTab`: lets the popup see which site the current tab is on.
+- Content scripts only on youtube.com, instagram.com, twitter.com, x.com, reddit.com and linkedin.com.
+- The only outside request is the optional YouTube dislike count: when the user turns it on, the
+  video ID is sent to `returnyoutubedislikeapi.com`. It is off by default. Firefox asks for
+  "browsing activity" consent (`data_collection_permissions.optional`) before it can be turned on.
+
+## Releasing
+
+Same flow as docktui. A PR bumps the version in `package.json`, `manifest.chrome.json` and
+`manifest.firefox.json` (CI rejects a tag that does not match all three). Then, on a clean,
+up-to-date `main`, `npm run release` creates GitHub Release `vX.Y.Z` and the `Release` workflow:
+
+1. builds and lints both targets, and attaches the two zips plus the source archive to the release;
+2. uploads the Chrome zip and submits it for review (Chrome Web Store API v2), when the repo
+   variable `CWS_EXTENSION_ID` is set;
+3. submits the Firefox build with its source to addons.mozilla.org (listed channel), when the repo
+   variable `AMO_PUBLISH` is `true`.
+
+`npm run release -- rc.1` makes a pre-release: zips attached, nothing sent to the stores.
+The very first version of each listing is uploaded by hand from the release assets.
+
+Secrets: `CWS_CLIENT_ID`, `CWS_CLIENT_SECRET`, `CWS_REFRESH_TOKEN`, `AMO_JWT_ISSUER`,
+`AMO_JWT_SECRET`. Variables: `CWS_PUBLISHER_ID`, `CWS_EXTENSION_ID`, `AMO_PUBLISH`.
 
 ## Architecture
 
