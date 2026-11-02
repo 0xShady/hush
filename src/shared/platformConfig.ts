@@ -21,7 +21,7 @@ export const PLATFORM_CONFIG: Record<PlatformKey, PlatformConfig> = {
       { key: "hideShorts", label: "Hide Shorts", info: "Removes Shorts shelves from Home, Subscriptions and search, the Shorts menu entry, and sends Shorts pages to your landing page." },
       { key: "hideSidebarRecs", label: "Hide Sidebar Recommendations", info: "Removes the recommended videos next to (or under) the player on watch pages." },
       { key: "hideEndScreen", label: "Hide End Screen", info: "Removes the grid of suggested videos and the clickable cards shown when a video ends." },
-      { key: "commentsBeeside", label: "Comments Beside Video", info: "Moves comments to the right of the player in their own scrolling panel; recommendations move under the video." },
+      { key: "commentsBeside", label: "Comments Beside Video", info: "Moves comments to the right of the player in their own scrolling panel; recommendations move under the video." },
       { key: "hideHomeFeed", label: "Hide Home Feed", info: "Empties the Home page grid so it no longer suggests videos." },
       { key: "disableAutoplay", label: "Disable Autoplay", info: "Turns off YouTube's autoplay switch and hides it, so the next video does not start by itself." },
       { key: "showDislikeCount", label: "Show Dislike Count", info: "Shows an estimated dislike count from the Return YouTube Dislike service. The video ID is sent to that service." },

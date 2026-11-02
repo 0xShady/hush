@@ -2,7 +2,7 @@ import type { PlatformSettings } from '../shared/types';
 import { SELECTORS } from '../shared/selectors/youtube.selectors';
 import { runContentScript, hideRule } from './runtime';
 
-const BEESIDE_STYLE_ID = 'hush-yt-beeside';
+const BESIDE_STYLE_ID = 'hush-yt-beside';
 const DISLIKE_COUNT_ATTR = 'data-hush-dislike-id';
 const commentsHome = document.createComment('hush-comments-home');
 const relatedHome = document.createComment('hush-related-home');
@@ -28,7 +28,7 @@ function buildCss(p: PlatformSettings): string {
 function applyDom(p: PlatformSettings): void {
   const f = p.features;
 
-  applyCommentsBeside(!!f.commentsBeeside);
+  applyCommentsBeside(!!f.commentsBeside);
 
   if (f.disableAutoplay) {
     const toggle = document.querySelector<HTMLElement>(SELECTORS.autoplayToggleChecked);
@@ -122,11 +122,11 @@ function applyCommentsBeside(on: boolean): void {
       related.before(relatedHome);
       primary.appendChild(related);
     }
-    upsertBeesideStyle();
+    upsertBesideStyle();
   } else {
     if (comments.parentElement === secondary) putBack(comments, commentsHome, primary);
     if (related && related.parentElement === primary) putBack(related, relatedHome, secondary);
-    document.getElementById(BEESIDE_STYLE_ID)?.remove();
+    document.getElementById(BESIDE_STYLE_ID)?.remove();
   }
 }
 
@@ -136,10 +136,10 @@ function putBack(el: HTMLElement, home: Comment, fallback: HTMLElement): void {
   else fallback.appendChild(el);
 }
 
-function upsertBeesideStyle(): void {
-  if (document.getElementById(BEESIDE_STYLE_ID)) return;
+function upsertBesideStyle(): void {
+  if (document.getElementById(BESIDE_STYLE_ID)) return;
   const style = document.createElement('style');
-  style.id = BEESIDE_STYLE_ID;
+  style.id = BESIDE_STYLE_ID;
   // --masthead = YT top bar height (~56px). Sticky pins the right column at
   // top; max-height clamps to viewport so the inner #comments scroll-area
   // matches the player's vertical footprint.
