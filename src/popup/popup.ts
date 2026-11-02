@@ -45,13 +45,46 @@ const app = document.getElementById('app')!;
 function render() {
   app.replaceChildren();
 
+  const header = document.createElement('header');
+  header.className = 'header';
+  const logo = document.createElement('img');
+  logo.className = 'logo';
+  logo.src = '/icons/icon-32.png';
+  logo.alt = '';
+  const title = document.createElement('h1');
+  title.className = 'title';
+  title.textContent = 'Hush';
+  header.append(logo, title);
+  app.append(header);
+
   const tabs = document.createElement('nav');
   tabs.className = 'tabs';
+  tabs.setAttribute('role', 'tablist');
   for (const key of PLATFORM_KEYS) {
+    const config = PLATFORM_CONFIG[key];
+    const platform = settings[key];
     const btn = document.createElement('button');
     btn.className = 'tab';
+    btn.setAttribute('role', 'tab');
+    btn.setAttribute('aria-selected', String(key === active));
+    btn.title = config.name;
     if (key === active) btn.classList.add('is-active');
-    btn.textContent = PLATFORM_CONFIG[key].name;
+    if (!platform.enabled) btn.classList.add('is-off');
+
+    const name = document.createElement('span');
+    name.textContent = config.short ?? config.name;
+    btn.append(name);
+
+    // Number of filters switched on for this site.
+    const count = platform.enabled ? Object.values(platform.features).filter(Boolean).length : 0;
+    if (count > 0) {
+      const badge = document.createElement('span');
+      badge.className = 'badge';
+      badge.textContent = String(count);
+      badge.setAttribute('aria-label', `${count} on`);
+      btn.append(badge);
+    }
+
     btn.addEventListener('click', () => {
       active = key;
       render();

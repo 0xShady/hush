@@ -1,5 +1,8 @@
+import { infoTip } from './infoTip';
+
 export type ToggleRowOpts = {
   label: string;
+  info?: string;
   checked: boolean;
   disabled?: boolean;
   onChange: (checked: boolean) => void;
@@ -13,6 +16,7 @@ export function toggleRow(opts: ToggleRowOpts): HTMLElement {
   const text = document.createElement('span');
   text.className = 'toggle-label';
   text.textContent = opts.label;
+  if (opts.info) text.append(infoTip(opts.info));
 
   const sw = document.createElement('span');
   sw.className = 'switch';
