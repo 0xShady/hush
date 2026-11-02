@@ -1,5 +1,5 @@
 import browser from 'webextension-polyfill';
-import type { PlatformKey, Settings } from '../shared/types';
+import type { PlatformKey, PlatformSettings, Settings } from '../shared/types';
 import { PLATFORM_KEYS } from '../shared/types';
 import { PLATFORM_CONFIG } from '../shared/platformConfig';
 import { getSettings, setPlatformSettings } from '../shared/storage';
@@ -7,6 +7,27 @@ import { platformTab } from './components/platformTab';
 
 let settings: Settings;
 let active: PlatformKey = 'youtube';
+
+// The dislike count sends the video ID to Return YouTube Dislike. Firefox (140+) asks the user to
+// consent to sharing browsing activity before that; Chrome needs no extra permission (the API allows
+// any origin).
+const DISLIKE_DATA = { data_collection: ['browsingActivity'] };
+const asksDataConsent = !!browser.runtime.getManifest().browser_specific_settings?.gecko;
+
+async function requestDislikeConsent(): Promise<boolean> {
+  if (!asksDataConsent) return true;
+  try {
+    return await (browser.permissions.request as (p: unknown) => Promise<boolean>)(DISLIKE_DATA);
+  } catch {
+    return false;
+  }
+}
+
+async function hasDislikeConsent(): Promise<boolean> {
+  if (!asksDataConsent) return true;
+  const granted = (await browser.permissions.getAll()) as { data_collection?: string[] };
+  return !!granted.data_collection?.includes('browsingActivity');
+}
 
 function platformForHost(host: string): PlatformKey | null {
   const h = host.toLowerCase();
@@ -98,6 +119,10 @@ function render() {
       platform: active,
       settings: settings[active],
       onPatch: async (patch) => {
+        // Must run first: the consent prompt only opens from the click that triggered it.
+        if (patch.features?.showDislikeCount && !settings[active].features.showDislikeCount) {
+          if (!(await requestDislikeConsent())) patch = withFeature(patch, 'showDislikeCount', false);
+        }
         settings = await setPlatformSettings(active, patch);
         render();
         pingActiveTab();
@@ -110,7 +135,15 @@ async function init() {
   const [loaded, detected] = await Promise.all([getSettings(), detectActiveTabPlatform()]);
   settings = loaded;
   if (detected) active = detected;
+  // Consent can be revoked from the add-ons manager; the switch follows it.
+  if (settings.youtube.features.showDislikeCount && !(await hasDislikeConsent())) {
+    settings = await setPlatformSettings('youtube', withFeature({ features: settings.youtube.features }, 'showDislikeCount', false));
+  }
   render();
+}
+
+function withFeature(patch: Partial<PlatformSettings>, key: string, value: boolean): Partial<PlatformSettings> {
+  return { ...patch, features: { ...patch.features, [key]: value } };
 }
 
 init();
