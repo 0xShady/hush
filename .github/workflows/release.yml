@@ -1,0 +1,76 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag to package and submit again
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: store-release
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      TAG: ${{ github.event.release.tag_name || inputs.tag }}
+      PRERELEASE: ${{ github.event.release.prerelease || false }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name || inputs.tag }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci
+
+      - name: Versions match the tag
+        run: |
+          for f in package.json manifest.chrome.json manifest.firefox.json; do
+            v=$(node -p "require('./$f').version")
+            if [ "v$v" != "${TAG%%-*}" ]; then
+              echo "::error::$f is $v but the tag is $TAG"
+              exit 1
+            fi
+          done
+
+      - run: npm run typecheck
+      - run: npm run package
+      - run: npm run lint:firefox
+
+      - name: Source archive (AMO reviews the readable source of bundled code)
+        run: git archive --format=zip -o "web-ext-artifacts/hush-source-${TAG#v}.zip" HEAD
+
+      - name: Attach the packages to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "$TAG" web-ext-artifacts/chrome/*.zip web-ext-artifacts/firefox/*.zip web-ext-artifacts/hush-source-*.zip --clobber
+
+      - name: Chrome Web Store
+        if: env.PRERELEASE != 'true' && vars.CWS_EXTENSION_ID != ''
+        env:
+          CWS_CLIENT_ID: ${{ secrets.CWS_CLIENT_ID }}
+          CWS_CLIENT_SECRET: ${{ secrets.CWS_CLIENT_SECRET }}
+          CWS_REFRESH_TOKEN: ${{ secrets.CWS_REFRESH_TOKEN }}
+          CWS_PUBLISHER_ID: ${{ vars.CWS_PUBLISHER_ID }}
+          CWS_EXTENSION_ID: ${{ vars.CWS_EXTENSION_ID }}
+        run: sh scripts/publish-chrome.sh web-ext-artifacts/chrome/hush-chrome-${TAG#v}.zip
+
+      - name: Firefox Add-ons
+        if: env.PRERELEASE != 'true' && vars.AMO_PUBLISH == 'true'
+        env:
+          WEB_EXT_API_KEY: ${{ secrets.AMO_JWT_ISSUER }}
+          WEB_EXT_API_SECRET: ${{ secrets.AMO_JWT_SECRET }}
+        run: >-
+          npx web-ext sign -s dist/firefox --channel listed --approval-timeout 0
+          --upload-source-code web-ext-artifacts/hush-source-${TAG#v}.zip
