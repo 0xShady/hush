@@ -3,7 +3,7 @@
   "name": "Hush: quiet your social feeds",
   "short_name": "Hush",
   "version": "1.0.0",
-  "description": "Show or hide specific UI sections and pages across major social media platforms.",
+  "description": "Hide Shorts, Reels, ads, suggestions and other noise on YouTube, X, Reddit, LinkedIn and Instagram. No account, no tracking.",
   "icons": {
     "16": "icons/icon-16.png",
     "32": "icons/icon-32.png",
