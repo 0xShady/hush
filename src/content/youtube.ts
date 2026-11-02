@@ -4,6 +4,8 @@ import { runContentScript, hideRule } from './runtime';
 
 const BEESIDE_STYLE_ID = 'hush-yt-beeside';
 const DISLIKE_COUNT_ATTR = 'data-hush-dislike-id';
+const commentsHome = document.createComment('hush-comments-home');
+const relatedHome = document.createComment('hush-related-home');
 const dislikeCache = new Map<string, string>();
 let dislikeInFlight = new Set<string>();
 
@@ -16,6 +18,8 @@ function buildCss(p: PlatformSettings): string {
     hideRule(SELECTORS.endScreen, f.hideEndScreen),
     hideRule(SELECTORS.homeFeed, f.hideHomeFeed),
     hideRule(SELECTORS.autoplayToggle, f.disableAutoplay),
+    hideRule(SELECTORS.subscriptionsGuide, f.hideSubscriptions),
+    hideRule(SELECTORS.playables, f.hidePlayables),
   ]
     .filter(Boolean)
     .join('\n');
@@ -110,14 +114,26 @@ function applyCommentsBeside(on: boolean): void {
   if (!comments || !primary || !secondary) return;
 
   if (on) {
-    if (comments.parentElement !== secondary) secondary.prepend(comments);
-    if (related && related.parentElement !== primary) primary.appendChild(related);
+    if (comments.parentElement !== secondary) {
+      comments.before(commentsHome);
+      secondary.prepend(comments);
+    }
+    if (related && related.parentElement !== primary) {
+      related.before(relatedHome);
+      primary.appendChild(related);
+    }
     upsertBeesideStyle();
   } else {
-    if (comments.parentElement === secondary) primary.appendChild(comments);
-    if (related && related.parentElement === primary) secondary.appendChild(related);
+    if (comments.parentElement === secondary) putBack(comments, commentsHome, primary);
+    if (related && related.parentElement === primary) putBack(related, relatedHome, secondary);
     document.getElementById(BEESIDE_STYLE_ID)?.remove();
   }
+}
+
+// Placeholders left where YouTube rendered the nodes, so turning the feature off restores the original layout.
+function putBack(el: HTMLElement, home: Comment, fallback: HTMLElement): void {
+  if (home.isConnected) home.replaceWith(el);
+  else fallback.appendChild(el);
 }
 
 function upsertBeesideStyle(): void {
