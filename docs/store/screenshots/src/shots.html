@@ -52,6 +52,25 @@ p.lead { margin: 18px 0 0; font-size: 21px; line-height: 1.45; color: #56625F; m
 #s4 dd { margin: 0; font-weight: 600; text-align: right; }
 #s4 dd.none { color: #1F6F65; }
 #s4 .card footer { margin-top: 16px; font-size: 15px; color: #56625F; line-height: 1.45; }
+
+#t1 { width: 440px; height: 280px; background: #17544D; color: #fff; display: flex; flex-direction: column; justify-content: center; padding: 0 38px; position: relative; overflow: hidden; }
+#t1 .brand { display: flex; align-items: center; gap: 14px; }
+#t1 .brand img { width: 64px; height: 64px; }
+#t1 .brand b { font-size: 46px; letter-spacing: -.03em; font-weight: 600; }
+#t1 p { margin: 18px 0 0; font-size: 25px; line-height: 1.2; font-weight: 600; letter-spacing: -.01em; }
+#t1 p em { font-style: normal; color: #A9D4CB; }
+#t1 .bars { position: absolute; right: -40px; top: 34px; display: flex; flex-direction: column; gap: 14px; opacity: .14; }
+#t1 .bars span { display: block; height: 34px; border-radius: 10px; background: #fff; }
+
+#t2 { width: 1400px; height: 560px; background: #EFF2F1; display: flex; align-items: center; padding: 0 0 0 96px; gap: 40px; overflow: hidden; position: relative; }
+#t2 .text { width: 560px; flex: none; }
+#t2 .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 26px; }
+#t2 .brand img { width: 48px; height: 48px; }
+#t2 .brand b { font-size: 32px; letter-spacing: -.02em; font-weight: 600; }
+#t2 h1 { font-size: 58px; }
+#t2 p.lead { max-width: none; }
+#t2 .art { position: relative; flex: 1; height: 560px; }
+#t2 .art img.demo { position: absolute; left: 0; top: 40px; width: 600px; -webkit-mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent), linear-gradient(to bottom, transparent, #000 5%, #000 92%, transparent); -webkit-mask-composite: source-in; }
 </style></head><body>
 
 <section class="shot" id="s1">
@@ -109,5 +128,20 @@ p.lead { margin: 18px 0 0; font-size: 21px; line-height: 1.45; color: #56625F; m
     </dl>
     <footer>The optional YouTube dislike count, off by default, asks Return YouTube Dislike for the video you watch.</footer>
   </div>
+</section>
+
+<section id="t1">
+  <div class="bars" aria-hidden="true"><span style="width:150px"></span><span style="width:150px"></span><span style="width:150px"></span></div>
+  <div class="brand"><img src="hush-icon-reverse.svg" alt=""><b>Hush</b></div>
+  <p>Keep what you came for.<br><em>Hush the rest.</em></p>
+</section>
+
+<section id="t2">
+  <div class="text">
+    <div class="brand"><img src="hush-icon.svg" alt=""><b>Hush</b></div>
+    <h1>Keep what you came for. <em>Hush the rest.</em></h1>
+    <p class="lead">Hide Shorts, Reels, ads and suggestions on YouTube, X, Reddit, LinkedIn and Instagram.</p>
+  </div>
+  <div class="art"><img class="demo" src="demo-quiet.png" alt=""></div>
 </section>
 </body></html>
