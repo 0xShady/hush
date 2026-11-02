@@ -6,8 +6,12 @@ const BESIDE_STYLE_ID = 'hush-yt-beside';
 const DISLIKE_COUNT_ATTR = 'data-hush-dislike-id';
 const commentsHome = document.createComment('hush-comments-home');
 const relatedHome = document.createComment('hush-related-home');
+const DISLIKE_MAX_ATTEMPTS = 5;
+const DISLIKE_BASE_DELAY_MS = 2000;
 const dislikeCache = new Map<string, string>();
-let dislikeInFlight = new Set<string>();
+const dislikeInFlight = new Set<string>();
+// Failed lookups are retried with exponential backoff; only successes are cached.
+const dislikeFailures = new Map<string, { attempts: number; retryAt: number }>();
 
 function buildCss(p: PlatformSettings): string {
   const f = p.features;
@@ -57,6 +61,11 @@ function applyDislikeCount(on: boolean): void {
 
   const current = btn.getAttribute(DISLIKE_COUNT_ATTR);
   if (current === videoId && btn.querySelector('.hush-dislike-count')) return;
+  // Never leave the previous video's count on the button while the new one loads.
+  if (current && current !== videoId) {
+    btn.removeAttribute(DISLIKE_COUNT_ATTR);
+    btn.querySelector('.hush-dislike-count')?.remove();
+  }
 
   const cached = dislikeCache.get(videoId);
   if (cached !== undefined) {
@@ -65,18 +74,22 @@ function applyDislikeCount(on: boolean): void {
   }
 
   if (dislikeInFlight.has(videoId)) return;
+  const failure = dislikeFailures.get(videoId);
+  if (failure && (failure.attempts >= DISLIKE_MAX_ATTEMPTS || Date.now() < failure.retryAt)) return;
   dislikeInFlight.add(videoId);
   fetch(`https://returnyoutubedislikeapi.com/votes?videoId=${encodeURIComponent(videoId)}`)
     .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
     .then((data: { dislikes?: number }) => {
-      const formatted =
-        typeof data.dislikes === 'number' ? formatCount(data.dislikes) : '?';
+      if (typeof data.dislikes !== 'number') throw new Error('no dislike count');
+      const formatted = formatCount(data.dislikes);
       dislikeCache.set(videoId, formatted);
+      dislikeFailures.delete(videoId);
       const liveBtn = document.querySelector<HTMLElement>(SELECTORS.dislikeButton);
       if (liveBtn) renderDislikeCount(liveBtn, videoId, formatted);
     })
     .catch(() => {
-      dislikeCache.set(videoId, '?');
+      const attempts = (dislikeFailures.get(videoId)?.attempts ?? 0) + 1;
+      dislikeFailures.set(videoId, { attempts, retryAt: Date.now() + DISLIKE_BASE_DELAY_MS * 2 ** (attempts - 1) });
     })
     .finally(() => {
       dislikeInFlight.delete(videoId);
