@@ -12,6 +12,8 @@ export const DEFAULT_SETTINGS: Settings = {
       hideHomeFeed: false,
       disableAutoplay: false,
       showDislikeCount: false,
+      hideSubscriptions: false,
+      hidePlayables: false,
     },
   },
   instagram: {
@@ -44,6 +46,7 @@ export const DEFAULT_SETTINGS: Settings = {
       hideAwards: false,
       hidePremiumUpsell: false,
       disableVideoAutoplay: false,
+      hideGames: false,
     },
   },
   linkedin: {
@@ -52,10 +55,7 @@ export const DEFAULT_SETTINGS: Settings = {
     features: {
       hidePeopleYouMayKnow: false,
       hideAds: false,
-      hideNewsActivity: false,
-      hideLearning: false,
-      hideAddToProfile: false,
-      hideCelebrate: false,
+      hidePuzzles: false,
       hidePremiumUpsell: false,
     },
   },
