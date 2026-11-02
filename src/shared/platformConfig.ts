@@ -40,7 +40,7 @@ export const PLATFORM_CONFIG: Record<PlatformKey, PlatformConfig> = {
     features: [
       { key: "hideReels", label: "Hide Reels Tab", info: "Removes the Reels link and sends Reels pages to your landing page." },
       { key: "hideStories", label: "Hide Stories Bar", info: "Removes the row of stories at the top of the feed." },
-      { key: "hideSuggested", label: "Hide Suggested Posts", info: "Collapses posts Instagram suggests from accounts you do not follow." },
+      { key: "hideSuggested", label: "Hide Suggested Posts and Accounts", info: "Collapses posts Instagram suggests from accounts you do not follow, and hides the Suggested for you accounts in the sidebar." },
       { key: "hideAds", label: "Hide Ads", info: "Collapses sponsored posts in the feed." },
       { key: "hideReelsInFeed", label: "Hide Reels in Feed", info: "Removes Reels from the feed. Photos and other videos stay." },
     ],
