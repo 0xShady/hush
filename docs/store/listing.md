@@ -92,7 +92,8 @@ Certify:
 ## Images
 
 - Icon: 128x128 (`public/icons/icon-128.png`, 96px art on 16px padding).
-- Screenshots: 1280x800 PNG, 1 to 5 (CWS needs at least one). Plan: the popup over a quiet YouTube
-  home page, YouTube watch page with comments beside, Instagram feed without Reels, X with Following,
-  the popup in dark mode.
+- Screenshots: `docs/store/screenshots/hush-screenshot-1..4.png` (1280x800, RGB): before/after on the site's
+  made-up demo page, the YouTube switches, three popups (light and dark), privacy. No real posts from any
+  site. Source: `screenshots/src/shots.html` (popups rendered from the production build with the browser
+  APIs mocked, demo captured from hush-media.dev); serve the folder and capture each section at 1280x800.
 - CWS small promo tile 440x280 (optional, shown in lists): logo and "Quiet your social feeds".
