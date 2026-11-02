@@ -1,0 +1,82 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face { font-family: 'Instrument Sans'; src: url(InstrumentSans-Variable.woff2) format('woff2'); font-weight: 400 700; }
+* { box-sizing: border-box; }
+html { scrollbar-width: none; } html::-webkit-scrollbar { display: none; }
+body { margin: 0; background: #888; font-family: 'Instrument Sans', sans-serif; color: #17201E; }
+.shot { width: 1280px; height: 800px; position: relative; overflow: hidden; background: #F1F4F3; display: flex; }
+h1 { margin: 0; font-size: 52px; line-height: 1.05; letter-spacing: -0.03em; font-weight: 600; }
+h1 em { font-style: normal; color: #56625F; }
+p.lead { margin: 18px 0 0; font-size: 21px; line-height: 1.45; color: #56625F; max-width: 30ch; }
+.pill { display: inline-block; font-size: 15px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #1F6F65; margin-bottom: 18px; }
+.pop { border-radius: 18px; box-shadow: 0 30px 60px -24px rgba(23,32,30,.35), 0 0 0 1px rgba(23,32,30,.08); display: block; }
+
+#s1 { flex-direction: column; align-items: center; padding-top: 48px; background: #EFF2F1; }
+#s1 .row { display: flex; gap: 40px; margin-top: 22px; align-items: flex-start; }
+#s1 figure { margin: 0; text-align: center; }
+#s1 figure img { width: 560px; display: block; -webkit-mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent), linear-gradient(to bottom, transparent, #000 5%, #000 92%, transparent); -webkit-mask-composite: source-in; mask-composite: intersect; }
+#s1 figcaption { font-size: 20px; font-weight: 600; color: #56625F; margin-bottom: 0; }
+#s1 figcaption b { color: #1F6F65; }
+
+#s2 { align-items: center; padding: 0 90px; gap: 80px; }
+#s2 .text { flex: 1; }
+#s2 ul { margin: 28px 0 0; padding: 0; list-style: none; font-size: 20px; line-height: 1.9; }
+#s2 li::before { content: ''; display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #1F6F65; margin-right: 14px; vertical-align: 2px; }
+
+#s3 { flex-direction: column; align-items: center; padding-top: 56px; }
+#s3 .row { display: flex; gap: 34px; margin-top: 44px; }
+#s3 .row img { width: 360px; }
+
+#s4 { background: #17544D; color: #fff; align-items: center; padding: 0 100px; gap: 90px; }
+#s4 h1 em { color: #A9D4CB; }
+#s4 ul { margin: 34px 0 0; padding: 0; list-style: none; font-size: 22px; line-height: 2; color: #DDEFEA; }
+#s4 li::before { content: '✓'; color: #6CC4B4; font-weight: 700; margin-right: 14px; }
+#s4 .badge { width: 300px; height: 300px; flex: none; }
+</style></head><body>
+
+<section class="shot" id="s1">
+  <h1>Keep what you came for. <em>Hush the rest.</em></h1>
+  <div class="row">
+    <figure><figcaption>Before</figcaption><img src="demo-noisy.png" alt=""></figure>
+    <figure><figcaption><b>With Hush</b></figcaption><img src="demo-quiet.png" alt=""></figure>
+  </div>
+</section>
+
+<section class="shot" id="s2">
+  <div class="text">
+    <span class="pill">YouTube</span>
+    <h1>Pick what goes,<br><em>switch by switch.</em></h1>
+    <ul>
+      <li>Shorts, home feed and recommendations</li>
+      <li>Autoplay and the end screen</li>
+      <li>Comments beside the video</li>
+      <li>Changes apply at once, no reload</li>
+    </ul>
+  </div>
+  <img class="pop" src="popup-youtube-light.png" alt="">
+</section>
+
+<section class="shot" id="s3">
+  <h1>Five sites, <em>one quiet popup.</em></h1>
+  <p class="lead" style="max-width:none;text-align:center">YouTube, X, Reddit, LinkedIn and Instagram. Light and dark.</p>
+  <div class="row">
+    <img class="pop" src="popup-instagram-dark.png" alt="">
+    <img class="pop" src="popup-x-light.png" alt="">
+    <img class="pop" src="popup-reddit-dark.png" alt="">
+  </div>
+</section>
+
+<section class="shot" id="s4">
+  <div>
+    <h1>Quiet about you, too.<br><em>Nothing to sign up for.</em></h1>
+    <ul>
+      <li>No account, no analytics, no ads</li>
+      <li>No server of its own, nothing sent by default</li>
+      <li>Your switches stay in your browser</li>
+      <li>Not a blocker: every site still works</li>
+    </ul>
+  </div>
+  <img class="badge" src="hush-icon-reverse.svg" alt="">
+</section>
+</body></html>
