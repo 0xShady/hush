@@ -13,41 +13,7 @@ Hide Shorts, Reels, ads, suggestions and other noise on YouTube, X, Reddit, Link
 
 ## Description
 
-Hush lets you switch off the parts of social sites you never asked for. Open the popup, pick a site,
-flip a switch: that part of the page disappears right away, without a reload. Turn the switch off and
-it comes back.
-
-YouTube
-- Shorts, the home feed, sidebar recommendations and the end screen
-- Autoplay, Games (Playables) and the Subscriptions list in the menu
-- Comments beside the video, and an optional dislike count
-
-X
-- Promoted posts, Trending, Who to follow and Grok
-- Open on your Following feed instead of For you
-
-Reddit
-- Promoted posts, awards, Premium upsells, video autoplay and Games
-
-LinkedIn
-- Promoted posts, People you may know, Today's puzzles and Premium upsells
-
-Instagram
-- Reels, Stories, suggested posts and accounts, and ads
-
-You can also choose the page each site opens on, and turn Hush off for a whole site.
-
-Private by design
-- No account, no analytics, no ads, no server.
-- Your switches are saved in your browser's extension storage.
-- Hush sends nothing anywhere. The one exception is the optional YouTube dislike count, which is off
-  by default: when you turn it on, the ID of the video you watch is sent to Return YouTube Dislike,
-  an independent service.
-
-Good to know: these sites change their pages often, so a switch can stop working until Hush is
-updated. Known limits are listed at https://hush-media.dev/docs.
-
-Hush is an independent project, not affiliated with YouTube, X, Reddit, LinkedIn or Instagram.
+Paste `store/description.txt` (one line per paragraph: the stores keep every line break).
 
 ## Category
 
