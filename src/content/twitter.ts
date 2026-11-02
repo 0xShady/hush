@@ -2,7 +2,8 @@ import type { PlatformSettings } from '../shared/types';
 import { SELECTORS, HIDDEN_ATTR, AD_LABELS } from '../shared/selectors/twitter.selectors';
 import { runContentScript, hideRule } from './runtime';
 
-// Set once Following was forced for this visit to /home, so manual tab switches are not fought.
+// Set once Following was picked for this visit to /home, so manual tab switches are not fought.
+// Cleared when leaving /home or turning the switch off, so turning it on switches at once.
 let followingDone = false;
 
 function buildCss(p: PlatformSettings): string {
@@ -45,11 +46,11 @@ function hasAdLabel(tweet: HTMLElement): boolean {
 }
 
 function applyDefaultFollowing(on: boolean): void {
-  if (location.pathname !== '/home') {
+  if (!on || location.pathname !== '/home') {
     followingDone = false;
     return;
   }
-  if (!on || followingDone) return;
+  if (followingDone) return;
 
   // Following is the second home tab in every language.
   const tablist = document.querySelector(SELECTORS.homeTabList);
