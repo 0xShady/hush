@@ -36,6 +36,7 @@ export function runContentScript(script: ContentScript): void {
   let lastHref = '';
   let cached: Settings | null = null;
   let rafScheduled = false;
+  let cleaned = true;
 
   const apply = (settings: Settings) => {
     cached = settings;
@@ -43,19 +44,23 @@ export function runContentScript(script: ContentScript): void {
 
     if (!p.enabled) {
       injectCss('');
+      // One pass with every feature off undoes DOM work (moved nodes, marks, injected labels).
+      if (!cleaned) {
+        script.applyDom?.(allFeaturesOff(p));
+        cleaned = true;
+      }
       return;
     }
+    cleaned = false;
 
     // Redirect first, only when the URL changed since the last pass.
-    if (script.redirect && location.href !== lastHref) {
+    if (location.href !== lastHref) {
       lastHref = location.href;
-      const target = script.redirect(p);
+      const target = script.redirect?.(p) ?? landingRedirect(p);
       if (target && !samePath(target)) {
         location.replace(new URL(target, location.origin).toString());
         return;
       }
-    } else {
-      lastHref = location.href;
     }
 
     injectCss(script.buildCss(p));
@@ -118,6 +123,15 @@ function installTestBridge(): void {
       window.postMessage({ type: 'hush:test-settings', settings: await getSettings() }, '*');
     }
   });
+}
+
+function landingRedirect(p: PlatformSettings): RedirectResult {
+  return p.landingPage && location.pathname === '/' ? p.landingPage : null;
+}
+
+function allFeaturesOff(p: PlatformSettings): PlatformSettings {
+  const features = Object.fromEntries(Object.keys(p.features).map((k) => [k, false]));
+  return { ...p, features };
 }
 
 function samePath(target: string): boolean {
