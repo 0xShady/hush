@@ -1,16 +1,16 @@
 import type { PlatformSettings } from '../shared/types';
-import { SELECTORS, FOLLOWING_TAB_TEXT } from '../shared/selectors/twitter.selectors';
+import { SELECTORS, HIDDEN_ATTR, AD_LABELS } from '../shared/selectors/twitter.selectors';
 import { runContentScript, hideRule } from './runtime';
 
-// Track which URL we already forced to Following, so we don't fight manual tab switches.
-let followingDoneFor = '';
+// Set once Following was forced for this visit to /home, so manual tab switches are not fought.
+let followingDone = false;
 
 function buildCss(p: PlatformSettings): string {
   const f = p.features;
   return [
     hideRule(SELECTORS.trending, f.hideTrending),
     hideRule(SELECTORS.whoToFollow, f.hideWhoToFollow),
-    hideRule(SELECTORS.promotedCell, f.hideAds),
+    hideRule(`[${HIDDEN_ATTR}]`, f.hideAds),
     hideRule(SELECTORS.grok, f.hideGrok),
   ]
     .filter(Boolean)
@@ -18,18 +18,46 @@ function buildCss(p: PlatformSettings): string {
 }
 
 function applyDom(p: PlatformSettings): void {
-  if (!p.features.defaultToFollowing) return;
-  if (location.pathname !== '/home') return;
-  if (followingDoneFor === location.href) return;
+  markAds(!!p.features.hideAds);
+  applyDefaultFollowing(!!p.features.defaultToFollowing);
+}
 
-  const tabs = Array.from(document.querySelectorAll<HTMLElement>(SELECTORS.homeTab));
-  const following = tabs.find((t) =>
-    FOLLOWING_TAB_TEXT.some((label) => (t.textContent || '').trim() === label),
-  );
+function markAds(on: boolean): void {
+  // Cells are recycled while scrolling, so marks are rebuilt on every pass.
+  for (const el of document.querySelectorAll<HTMLElement>(`[${HIDDEN_ATTR}]`)) {
+    el.removeAttribute(HIDDEN_ATTR);
+  }
+  if (!on) return;
+
+  for (const tweet of document.querySelectorAll<HTMLElement>(SELECTORS.tweet)) {
+    if (hasAdLabel(tweet)) tweet.closest(SELECTORS.cell)?.setAttribute(HIDDEN_ATTR, '');
+  }
+}
+
+// Promoted tweets carry a short label ("Ad") outside the tweet text.
+function hasAdLabel(tweet: HTMLElement): boolean {
+  for (const span of tweet.querySelectorAll('span')) {
+    if (span.childElementCount > 0) continue;
+    if (!AD_LABELS.includes(span.textContent?.trim() ?? '')) continue;
+    if (!span.closest(SELECTORS.tweetText)) return true;
+  }
+  return false;
+}
+
+function applyDefaultFollowing(on: boolean): void {
+  if (location.pathname !== '/home') {
+    followingDone = false;
+    return;
+  }
+  if (!on || followingDone) return;
+
+  // Following is the second home tab in every language.
+  const tablist = document.querySelector(SELECTORS.homeTabList);
+  const following = tablist?.querySelectorAll<HTMLElement>(SELECTORS.homeTab)[1];
   if (!following) return;
 
   if (following.getAttribute('aria-selected') !== 'true') following.click();
-  followingDoneFor = location.href;
+  followingDone = true;
 }
 
 function redirect(p: PlatformSettings): string | null {
