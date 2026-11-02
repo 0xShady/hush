@@ -5,6 +5,7 @@ import {
   SUGGESTED_LABELS,
   HIDDEN_ATTR,
   STORIES_ATTR,
+  SUGGESTED_ACCOUNTS_ATTR,
 } from '../shared/selectors/instagram.selectors';
 import { runContentScript, hideRule } from './runtime';
 
@@ -16,6 +17,7 @@ function buildCss(p: PlatformSettings): string {
     hideRule(SELECTORS.reelsNav, f.hideReels),
     // Stories wrapper marked by JS: hide the whole section so arrows and ring borders collapse.
     hideRule(`[${STORIES_ATTR}]`, f.hideStories),
+    hideRule(`[${SUGGESTED_ACCOUNTS_ATTR}]`, f.hideSuggested),
     hideRule(SELECTORS.feedReelArticle, f.hideReelsInFeed),
     // Articles marked as ad/suggested: collapse in place (no display:none).
     // display:none triggers IG's virtualization to reshuffle scroll math →
@@ -43,6 +45,7 @@ function applyDom(p: PlatformSettings): void {
   const f = p.features;
 
   applyStoriesMark(!!f.hideStories);
+  applySuggestedAccountsMark(!!f.hideSuggested);
   applyArticleMarks(!!f.hideAds, !!f.hideSuggested);
 }
 
@@ -63,6 +66,22 @@ function applyStoriesMark(on: boolean): void {
     wrapper = wrapper.parentElement;
   }
   wrapper.setAttribute(STORIES_ATTR, '');
+}
+
+function applySuggestedAccountsMark(on: boolean): void {
+  for (const el of document.querySelectorAll<HTMLElement>(`[${SUGGESTED_ACCOUNTS_ATTR}]`)) {
+    el.removeAttribute(SUGGESTED_ACCOUNTS_ATTR);
+  }
+  if (!on) return;
+
+  const link = [...document.querySelectorAll<HTMLElement>(SELECTORS.suggestedAccountsLink)].find((a) => !a.closest('article'));
+  if (!link) return;
+  // "See all" sits in the heading row; the block is the first ancestor that also holds the avatars.
+  let block: HTMLElement | null = link;
+  while (block && block.querySelectorAll('img').length < 2) block = block.parentElement;
+  if (!block || block.matches('main') || block.querySelector('article')) return;
+  while (block.parentElement && block.parentElement.children.length === 1) block = block.parentElement;
+  block.setAttribute(SUGGESTED_ACCOUNTS_ATTR, '');
 }
 
 function applyArticleMarks(hideAds: boolean, hideSuggested: boolean): void {
