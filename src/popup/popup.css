@@ -1,29 +1,38 @@
+/* Brand tokens from the Hush kit (same values as hush-media.dev). License: licenses/InstrumentSans-OFL.txt */
+@font-face {
+  font-family: 'Instrument Sans';
+  src: url('./fonts/InstrumentSans-Variable.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
-  --hush-canvas: #f3f4f7;
+  --hush-canvas: #f1f4f3;
   --hush-surface: #ffffff;
-  --hush-text: #171a21;
-  --hush-muted: #687083;
-  --hush-line: #e4e6eb;
-  --hush-accent: #4b55c8;
-  --hush-accent-soft: rgba(75, 85, 200, 0.12);
-  --hush-track-off: #d3d6de;
+  --hush-text: #17201e;
+  --hush-muted: #56625f;
+  --hush-line: #dce3e0;
+  --hush-accent: #1f6f65;
+  --hush-accent-soft: #ddefea;
+  --hush-track-off: #8c9794;
   --hush-knob: #ffffff;
-  --hush-shadow: 0 1px 2px rgba(23, 26, 33, 0.06), 0 1px 1px rgba(23, 26, 33, 0.04);
+  --hush-shadow: 0 1px 2px rgba(23, 32, 30, 0.08), 0 1px 1px rgba(23, 32, 30, 0.04);
   --hush-radius: 12px;
   color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --hush-canvas: #14161b;
-    --hush-surface: #1c1f26;
-    --hush-text: #e9ebf0;
-    --hush-muted: #9097a6;
-    --hush-line: #2a2e37;
-    --hush-accent: #8c93f5;
-    --hush-accent-soft: rgba(140, 147, 245, 0.16);
-    --hush-track-off: #3a3f4a;
-    --hush-knob: #f5f6f8;
+    --hush-canvas: #111615;
+    --hush-surface: #1a201f;
+    --hush-text: #e6ecea;
+    --hush-muted: #9aa6a2;
+    --hush-line: #2b3431;
+    --hush-accent: #6cc4b4;
+    --hush-accent-soft: rgba(108, 196, 180, 0.16);
+    --hush-track-off: #4a5552;
+    --hush-knob: #ffffff;
     --hush-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
     color-scheme: dark;
   }
@@ -37,7 +46,7 @@ body {
   margin: 0;
   width: 360px;
   min-height: 500px;
-  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-family: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
   font-size: 13px;
   line-height: 1.35;
   background: var(--hush-canvas);
