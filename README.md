@@ -106,14 +106,17 @@ at the bottom of the relevant selector file; add localized strings there.
 
 ## Icons
 
-- Vector source: `src/assets/icons/icon.svg` (feed rows; top rows dissolving = hidden, one row highlighted blue).
-- Shipped PNGs live in `public/icons/` (`icon-16/32/48/128.png`). Vite copies `public/` verbatim to the build root, and the manifests reference `icons/icon-*.png`.
-- Regenerate after editing the SVG:
+- Brand source: `src/assets/icons/icon.svg` (the Hush mark, from the brand kit) and `src/assets/icons/icon-small.svg` (the pixel-tuned 16 px version).
+- Shipped PNGs live in `public/icons/` (`icon-16/32/48/128.png`). 16 and 32 come from the brand kit's hand-tuned favicon frames. 128 keeps the art in 96 x 96 with 16 px of transparent padding, as the Chrome Web Store asks.
+- Regenerate 48 and 128 after editing the SVG:
 
   ```bash
   cd src/assets/icons
-  for s in 16 32 48 128; do magick -background none icon.svg -resize ${s}x${s} ../../../public/icons/icon-$s.png; done
+  magick -background none -density 384 icon.svg -resize 48x48 ../../../public/icons/icon-48.png
+  magick -background none -density 384 icon.svg -resize 96x96 -gravity center -extent 128x128 ../../../public/icons/icon-128.png
   ```
+
+- The popup uses Instrument Sans, bundled from `src/popup/fonts/` (SIL Open Font License, shipped as `licenses/InstrumentSans-OFL.txt`).
 
 ## Notes
 
