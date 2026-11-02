@@ -18,27 +18,32 @@ function buildCss(p: PlatformSettings): string {
     // Stories wrapper marked by JS: hide the whole section so arrows and ring borders collapse.
     hideRule(`[${STORIES_ATTR}]`, f.hideStories),
     hideRule(`[${SUGGESTED_ACCOUNTS_ATTR}]`, f.hideSuggested),
-    hideRule(SELECTORS.feedReelArticle, f.hideReelsInFeed),
-    // Articles marked as ad/suggested: collapse in place (no display:none).
-    // display:none triggers IG's virtualization to reshuffle scroll math →
-    // jumpy feed + huge gaps. Zero-height-but-in-flow keeps anchors stable.
-    f.hideAds || f.hideSuggested
-      ? `article[${HIDDEN_ATTR}] {
-           height: 0 !important;
-           min-height: 0 !important;
-           max-height: 0 !important;
-           margin: 0 !important;
-           padding: 0 !important;
-           border: 0 !important;
-           overflow: hidden !important;
-           opacity: 0 !important;
-           pointer-events: none !important;
-           overflow-anchor: none !important;
-         }`
-      : '',
+    collapseRule(
+      [f.hideReelsInFeed && SELECTORS.feedReelArticle, (f.hideAds || f.hideSuggested) && `article[${HIDDEN_ATTR}]`],
+    ),
   ]
     .filter(Boolean)
     .join('\n');
+}
+
+// The feed is a virtual list that sizes each post as the gap to the next post's top. A display:none post
+// reports a top of 0 and corrupts its neighbour's size (blank space, no next page); a 1px post is first
+// counted at the 800px estimate and the shrink pulls the scroll back. 0px in flow is measured exactly.
+function collapseRule(selectors: (string | false | undefined)[]): string {
+  const list = selectors.filter(Boolean).join(', ');
+  if (!list) return '';
+  return `${list} {
+    display: block !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    max-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }`;
 }
 
 function applyDom(p: PlatformSettings): void {
