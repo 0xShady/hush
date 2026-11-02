@@ -8,7 +8,7 @@ export const DEFAULT_SETTINGS: Settings = {
       hideShorts: false,
       hideSidebarRecs: false,
       hideEndScreen: false,
-      commentsBeeside: false,
+      commentsBeside: false,
       hideHomeFeed: false,
       disableAutoplay: false,
       showDislikeCount: false,
