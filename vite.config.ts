@@ -33,6 +33,9 @@ function buildIdStamp(): Plugin {
 }
 
 export default defineConfig({
+  define: {
+    __HUSH_DEV__: JSON.stringify(devReload),
+  },
   plugins: [
     webExtension({
       manifest: manifest as Record<string, unknown>,

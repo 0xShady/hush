@@ -1,6 +1,6 @@
 import browser from 'webextension-polyfill';
 import type { PlatformKey, PlatformSettings, Settings } from '../shared/types';
-import { getSettings, onSettingsChange, contextAlive } from '../shared/storage';
+import { getSettings, setSettings, onSettingsChange, contextAlive } from '../shared/storage';
 
 const STYLE_ID = 'hush-style';
 
@@ -103,7 +103,21 @@ export function runContentScript(script: ContentScript): void {
     /* context gone */
   }
 
+  if (__HUSH_DEV__) installTestBridge();
+
   refresh();
+}
+
+// Dev builds only: lets E2E tests read and write settings from the page with postMessage.
+function installTestBridge(): void {
+  window.addEventListener('message', async (e) => {
+    if (e.source !== window || !e.data || typeof e.data !== 'object') return;
+    const { type, settings } = e.data as { type?: string; settings?: Settings };
+    if (type === 'hush:test-set' && settings) await setSettings(settings);
+    if (type === 'hush:test-set' || type === 'hush:test-get') {
+      window.postMessage({ type: 'hush:test-settings', settings: await getSettings() }, '*');
+    }
+  });
 }
 
 function samePath(target: string): boolean {
