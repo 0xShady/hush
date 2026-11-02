@@ -1,8 +1,8 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Hush: quiet your social feeds",
   "short_name": "Hush",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Show or hide specific UI sections and pages across major social media platforms.",
   "icons": {
     "16": "icons/icon-16.png",
@@ -10,40 +10,73 @@
     "48": "icons/icon-48.png",
     "128": "icons/icon-128.png"
   },
-  "browser_action": {
+  "action": {
     "default_popup": "src/popup/index.html",
     "default_title": "Hush"
   },
-  "permissions": ["storage", "tabs", "https://returnyoutubedislikeapi.com/*"],
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
   "browser_specific_settings": {
     "gecko": {
-      "id": "hush@local"
+      "id": "hush@hush-media.dev",
+      "strict_min_version": "140.0",
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ],
+        "optional": [
+          "browsingActivity"
+        ]
+      }
     }
   },
   "content_scripts": [
     {
-      "matches": ["*://*.youtube.com/*"],
-      "js": ["src/content/youtube.ts"],
+      "matches": [
+        "*://*.youtube.com/*"
+      ],
+      "js": [
+        "src/content/youtube.ts"
+      ],
       "run_at": "document_start"
     },
     {
-      "matches": ["*://*.instagram.com/*"],
-      "js": ["src/content/instagram.ts"],
+      "matches": [
+        "*://*.instagram.com/*"
+      ],
+      "js": [
+        "src/content/instagram.ts"
+      ],
       "run_at": "document_start"
     },
     {
-      "matches": ["*://*.twitter.com/*", "*://*.x.com/*"],
-      "js": ["src/content/twitter.ts"],
+      "matches": [
+        "*://*.twitter.com/*",
+        "*://*.x.com/*"
+      ],
+      "js": [
+        "src/content/twitter.ts"
+      ],
       "run_at": "document_start"
     },
     {
-      "matches": ["*://*.reddit.com/*"],
-      "js": ["src/content/reddit.ts"],
+      "matches": [
+        "*://*.reddit.com/*"
+      ],
+      "js": [
+        "src/content/reddit.ts"
+      ],
       "run_at": "document_start"
     },
     {
-      "matches": ["*://*.linkedin.com/*"],
-      "js": ["src/content/linkedin.ts"],
+      "matches": [
+        "*://*.linkedin.com/*"
+      ],
+      "js": [
+        "src/content/linkedin.ts"
+      ],
       "run_at": "document_start"
     }
   ]

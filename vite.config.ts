@@ -16,7 +16,12 @@ const outDir = `dist/${target}`;
 const manifest = target === 'firefox'
   ? firefoxManifest
   : devReload
-    ? { ...chromeManifest, background: { service_worker: 'src/dev/reloader.ts' } }
+    ? {
+        ...chromeManifest,
+        // The reloader queries and reloads open site tabs; only dev builds ask for tabs.
+        permissions: [...chromeManifest.permissions, 'tabs'],
+        background: { service_worker: 'src/dev/reloader.ts' },
+      }
     : chromeManifest;
 
 // Every Chrome build stamps dev-build.json last, so src/dev/reloader.ts reloads the
