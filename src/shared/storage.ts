@@ -23,16 +23,19 @@ function isContextInvalidated(e: unknown): boolean {
   );
 }
 
-// Merge stored settings over defaults so new feature keys always resolve.
+// Merge stored settings over defaults so new feature keys always resolve and removed ones drop out.
 function mergeWithDefaults(stored: Partial<Settings> | undefined): Settings {
   const result = {} as Settings;
   for (const key of PLATFORM_KEYS) {
     const def = DEFAULT_SETTINGS[key];
     const got = stored?.[key];
+    const features = Object.fromEntries(
+      Object.keys(def.features).map((f) => [f, got?.features?.[f] ?? def.features[f]]),
+    );
     result[key] = {
       enabled: got?.enabled ?? def.enabled,
       landingPage: got?.landingPage ?? def.landingPage,
-      features: { ...def.features, ...(got?.features ?? {}) },
+      features,
     };
   }
   return result;
