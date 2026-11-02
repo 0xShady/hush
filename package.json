@@ -1,6 +1,6 @@
 {
   "name": "hush",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Browser extension to show/hide UI sections across social media platforms.",
   "type": "module",
   "private": true,
@@ -16,8 +16,10 @@
     "start:firefox": "web-ext run -s dist/firefox --firefox-profile ~/.local/share/hush/firefox-profile --profile-create-if-missing --keep-profile-changes --start-url https://youtube.com",
     "typecheck": "tsc --noEmit",
     "package": "npm run build && npm run package:chrome && npm run package:firefox",
-    "package:chrome": "web-ext build -s dist/chrome -a web-ext-artifacts/chrome --overwrite-dest",
-    "package:firefox": "web-ext build -s dist/firefox -a web-ext-artifacts/firefox --overwrite-dest"
+    "package:chrome": "web-ext build -s dist/chrome -a web-ext-artifacts/chrome --filename hush-chrome-{version}.zip --overwrite-dest",
+    "package:firefox": "web-ext build -s dist/firefox -a web-ext-artifacts/firefox --filename hush-firefox-{version}.zip --overwrite-dest",
+    "lint:firefox": "web-ext lint -s dist/firefox",
+    "release": "sh scripts/release.sh"
   },
   "dependencies": {
     "webextension-polyfill": "^0.12.0"
