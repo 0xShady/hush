@@ -57,7 +57,7 @@ Hush is an independent project, not affiliated with YouTube, X, Reddit, LinkedIn
 ## Links
 
 - Website / homepage: https://hush-media.dev
-- Support: https://hush-media.dev/docs and [CONTACT_EMAIL]
+- Support: https://hush-media.dev/docs and contact@hush-media.dev
 - Privacy policy: https://hush-media.dev/privacy
 
 ## Chrome Web Store: Privacy practices tab
