@@ -4,7 +4,7 @@ import { getSettings, setSettings, onSettingsChange, contextAlive } from '../sha
 
 const STYLE_ID = 'hush-style';
 
-export function injectCss(css: string): void {
+function injectCss(css: string): void {
   const parent = document.head || document.documentElement;
   let style = document.getElementById(STYLE_ID) as HTMLStyleElement | null;
   if (!style) {
@@ -20,7 +20,7 @@ export function hideRule(selector: string, on: boolean): string {
   return `${selector} { display: none !important; }`;
 }
 
-export type RedirectResult = string | null;
+type RedirectResult = string | null;
 
 export type ContentScript = {
   platform: PlatformKey;

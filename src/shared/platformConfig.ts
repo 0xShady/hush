@@ -1,7 +1,7 @@
 import type { PlatformKey } from "./types";
 
-export type FeatureMeta = { key: string; label: string; info: string };
-export type LandingOption = { value: string; label: string };
+type FeatureMeta = { key: string; label: string; info: string };
+type LandingOption = { value: string; label: string };
 
 export type PlatformConfig = {
   name: string;

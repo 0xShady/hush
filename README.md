@@ -1,9 +1,10 @@
 # Hush
 
-Browser extension to show/hide UI sections and pages across YouTube, Instagram,
-Twitter/X, Reddit, and LinkedIn. All control via a popup with per-platform toggles
-and a landing-page dropdown. No AI, no analytics, no backend: pure DOM manipulation
-+ `chrome.storage.sync`. Website: https://hush-media.dev
+Browser extension for Chrome and Firefox that hides parts of YouTube, Instagram, X, Reddit and
+LinkedIn, from a popup with per-site switches and a landing page choice. No analytics, no backend:
+it changes the page in your browser and keeps your settings in `storage.sync`.
+
+Website: https://hush-media.dev
 
 ## Install (dev)
 
@@ -25,6 +26,7 @@ npm run build          # → dist/chrome + dist/firefox (both Manifest V3)
 | `npm run package` | Build then zip both via `web-ext` → `web-ext-artifacts/{chrome,firefox}/hush-<browser>-<version>.zip` |
 | `npm run lint:firefox` | `web-ext lint` on the Firefox build (what addons.mozilla.org runs) |
 | `npm run dev:chrome` | Watch build with an auto-reloading dev worker and a settings bridge for end-to-end tests (dev only) |
+| `npm run start:chrome` / `start:firefox` | Run the build in a separate browser profile with `web-ext`. For a Chromium browser other than Chrome, set `WEB_EXT_CHROMIUM_BINARY` to its path |
 | `npm run release` | Create the GitHub Release for the version in `package.json` (from an up-to-date `main`) |
 
 ## Building from source (for add-on reviewers)
@@ -49,7 +51,7 @@ The source archive attached to each release is `git archive` of the tagged commi
 
 ## Releasing
 
-Same flow as docktui. A PR bumps the version in `package.json`, `manifest.chrome.json` and
+A PR bumps the version in `package.json`, `manifest.chrome.json` and
 `manifest.firefox.json` (CI rejects a tag that does not match all three). Then, on a clean,
 up-to-date `main`, `npm run release` creates GitHub Release `vX.Y.Z` and the `Release` workflow:
 
@@ -89,7 +91,7 @@ Secrets: `CWS_CLIENT_ID`, `CWS_CLIENT_SECRET`, `CWS_REFRESH_TOKEN`, `AMO_JWT_ISS
    re-run on every mutation.
 
 Disabling a platform clears its injected CSS. Toggling in the popup fires
-`storage.onChanged` → all tabs re-apply **without reload** (live sync, step 9).
+`storage.onChanged` → all tabs re-apply **without reload**.
 
 ## Selector maintenance
 
@@ -117,7 +119,3 @@ at the bottom of the relevant selector file; add localized strings there.
   ```
 
 - The popup uses Instrument Sans, bundled from `src/popup/fonts/` (SIL Open Font License, shipped as `licenses/InstrumentSans-OFL.txt`).
-
-## Notes
-
-- Twitter script is declared for both `twitter.com` and `x.com` in both manifests.
