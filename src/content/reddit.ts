@@ -26,7 +26,6 @@ function buildCss(p: PlatformSettings): string {
 function applyDom(p: PlatformSettings): void {
   const f = p.features;
 
-  // Clear previous text-based marks so toggling categories off un-hides instantly.
   for (const el of document.querySelectorAll<HTMLElement>(`[${HIDDEN_ATTR}]`)) {
     el.removeAttribute(HIDDEN_ATTR);
   }

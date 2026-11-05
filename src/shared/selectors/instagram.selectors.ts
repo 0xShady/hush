@@ -1,4 +1,3 @@
-// IG class names are obfuscated/rotating, so prefer href, role, and structure hooks.
 
 export const SELECTORS = {
   // The Reels entry in the navigation only: posts also link to /reels/<id>/ and /reels/audio/<id>/.

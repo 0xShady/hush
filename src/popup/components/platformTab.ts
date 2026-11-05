@@ -53,7 +53,6 @@ export function platformTab(opts: PlatformTabOpts): HTMLElement {
   landingWrap.append(landingLabel, select);
   siteGroup.append(landingWrap);
 
-  // Feature toggles are greyed out while the master toggle is off.
   const list = document.createElement('div');
   list.className = 'group feature-list';
   for (const feat of config.features) {

@@ -34,7 +34,7 @@ export const MODULE_TITLES = {
   puzzles: ['Today’s puzzles', "Today's puzzles"],
 } as const;
 
-// Short Premium prompt in the top navigation bar ("Retry for MAD 0").
+// Short Premium prompt in the top navigation bar.
 export const NAV_PREMIUM_TEXT = ['Premium', 'Retry for', 'Try for', 'Reactivate'];
 
 // Matched inside small sidebar and in-feed cards only.

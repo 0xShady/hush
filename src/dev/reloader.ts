@@ -1,9 +1,4 @@
 // Dev-only background worker, added to the Chrome manifest by `npm run dev:chrome`.
-//
-// `vite build --watch` writes dev-build.json with a new id after every rebuild.
-// This polls it and, when the id changes, reloads the extension, then reloads open
-// tabs on supported sites so their content scripts re-inject.
-//
 // Unpacked extensions serve files straight from disk, so the fetch sees new builds.
 // Calling an extension API every tick (storage.local.get) keeps the MV3 worker
 // alive; otherwise Chrome stops it after 30 s idle.
@@ -33,7 +28,6 @@ async function poll(): Promise<void> {
   }
 }
 
-// Wake on browser start too, not only on install or reload
 browser.runtime.onStartup.addListener(() => {});
 
 void (async () => {

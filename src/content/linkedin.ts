@@ -29,7 +29,6 @@ function buildCss(p: PlatformSettings): string {
 function applyDom(p: PlatformSettings): void {
   const f = p.features;
 
-  // Clear previous marks so toggling categories off un-hides instantly.
   for (const el of document.querySelectorAll<HTMLElement>(`[${HIDDEN_ATTR}]`)) {
     el.removeAttribute(HIDDEN_ATTR);
   }
@@ -97,7 +96,6 @@ function hasAdLabel(texts: string[]): boolean {
 
 type Leaf = { el: Element; text: string };
 
-// Leaf <span>/<p> nodes in document order: labels, titles and header lines.
 function leafTexts(root: Element): Leaf[] {
   const out: Leaf[] = [];
   for (const el of root.querySelectorAll('span, p')) {

@@ -99,4 +99,4 @@ export function onSettingsChange(cb: (settings: Settings) => void): () => void {
   };
 }
 
-export { contextAlive, isContextInvalidated };
+export { contextAlive };
