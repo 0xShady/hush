@@ -6,6 +6,11 @@ it changes the page in your browser and keeps your settings in `storage.sync`.
 
 Website: https://hush-media.dev
 
+## Install
+
+- **Chrome and other Chromium browsers**: [Chrome Web Store](https://chromewebstore.google.com/detail/hush-quiet-your-social-fe/geghioemfiedfkmganbkgapajhphecfo)
+- **Firefox**: coming soon
+
 ## Install (dev)
 
 ```bash
@@ -119,3 +124,17 @@ at the bottom of the relevant selector file; add localized strings there.
   ```
 
 - The popup uses Instrument Sans, bundled from `src/popup/fonts/` (SIL Open Font License, shipped as `licenses/InstrumentSans-OFL.txt`).
+
+## Contributing
+
+Issues and pull requests are welcome: see [CONTRIBUTING.md](CONTRIBUTING.md). To report a security
+issue, see [SECURITY.md](SECURITY.md).
+
+## License
+
+The code is under the [MIT License](LICENSE). Instrument Sans is under the
+[SIL Open Font License](public/licenses/InstrumentSans-OFL.txt).
+
+The MIT License covers the code, not the Hush name or logo (`src/assets/icons/`, `public/icons/` and
+the images in `store/`). You are welcome to fork Hush, but if you publish a fork, give it its own
+name and icon so nobody mistakes it for Hush.
