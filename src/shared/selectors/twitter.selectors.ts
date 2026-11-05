@@ -1,4 +1,3 @@
-// data-testid hooks are the most stable handle on this app.
 // Sidebar modules are hidden by their bordered card so no empty box stays behind.
 
 export const SELECTORS = {

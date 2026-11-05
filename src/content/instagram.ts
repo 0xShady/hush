@@ -15,7 +15,6 @@ function buildCss(p: PlatformSettings): string {
   const f = p.features;
   return [
     hideRule(SELECTORS.reelsNav, f.hideReels),
-    // Stories wrapper marked by JS: hide the whole section so arrows and ring borders collapse.
     hideRule(`[${STORIES_ATTR}]`, f.hideStories),
     hideRule(`[${SUGGESTED_ACCOUNTS_ATTR}]`, f.hideSuggested),
     collapseRule(
@@ -90,7 +89,6 @@ function applySuggestedAccountsMark(on: boolean): void {
 }
 
 function applyArticleMarks(hideAds: boolean, hideSuggested: boolean): void {
-  // Clear previous marks so a single rule covers both categories cleanly.
   for (const el of document.querySelectorAll<HTMLElement>(`article[${HIDDEN_ATTR}]`)) {
     el.removeAttribute(HIDDEN_ATTR);
   }
@@ -117,7 +115,6 @@ function headerLabels(article: HTMLElement): string[] {
 }
 
 function redirect(p: PlatformSettings): string | null {
-  // Hide Reels Tab also blocks /reels/* → bounce to landing or root.
   if (p.features.hideReels && location.pathname.startsWith('/reels')) {
     return resolveLanding(p, ['/reels']);
   }

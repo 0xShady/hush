@@ -4,7 +4,7 @@ import { getSettings, setSettings, onSettingsChange, contextAlive } from '../sha
 
 const STYLE_ID = 'hush-style';
 
-export function injectCss(css: string): void {
+function injectCss(css: string): void {
   const parent = document.head || document.documentElement;
   let style = document.getElementById(STYLE_ID) as HTMLStyleElement | null;
   if (!style) {
@@ -20,15 +20,12 @@ export function hideRule(selector: string, on: boolean): string {
   return `${selector} { display: none !important; }`;
 }
 
-export type RedirectResult = string | null;
+type RedirectResult = string | null;
 
 export type ContentScript = {
   platform: PlatformKey;
-  // CSS from feature flags; applies to future nodes, so no observer is needed.
   buildCss: (p: PlatformSettings) => string;
-  // Imperative per-pass work (move DOM, disable autoplay, etc.). Re-run on mutation.
   applyDom?: (p: PlatformSettings) => void;
-  // Return a path to navigate to, or null. Runs once per settings pass / navigation.
   redirect?: (p: PlatformSettings) => RedirectResult;
 };
 
@@ -53,7 +50,6 @@ export function runContentScript(script: ContentScript): void {
     }
     cleaned = false;
 
-    // Redirect first, only when the URL changed since the last pass.
     if (location.href !== lastHref) {
       lastHref = location.href;
       const target = script.redirect?.(p) ?? landingRedirect(p);
@@ -67,7 +63,6 @@ export function runContentScript(script: ContentScript): void {
     script.applyDom?.(p);
   };
 
-  // Observer path: cached settings only, throttled to one apply per frame.
   const scheduleObserverApply = () => {
     if (rafScheduled || !cached) return;
     rafScheduled = true;

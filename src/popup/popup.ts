@@ -96,7 +96,6 @@ function render() {
     name.textContent = config.short ?? config.name;
     btn.append(name);
 
-    // Number of filters switched on for this site.
     const count = platform.enabled ? Object.values(platform.features).filter(Boolean).length : 0;
     if (count > 0) {
       const badge = document.createElement('span');

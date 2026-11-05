@@ -1,11 +1,10 @@
 import type { PlatformKey } from "./types";
 
-export type FeatureMeta = { key: string; label: string; info: string };
-export type LandingOption = { value: string; label: string };
+type FeatureMeta = { key: string; label: string; info: string };
+type LandingOption = { value: string; label: string };
 
 export type PlatformConfig = {
   name: string;
-  // Tab label when the name is too long for the tab bar.
   short?: string;
   features: FeatureMeta[];
   landingOptions: LandingOption[];

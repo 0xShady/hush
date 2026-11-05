@@ -10,7 +10,6 @@ const DISLIKE_MAX_ATTEMPTS = 5;
 const DISLIKE_BASE_DELAY_MS = 2000;
 const dislikeCache = new Map<string, string>();
 const dislikeInFlight = new Set<string>();
-// Failed lookups are retried with exponential backoff; only successes are cached.
 const dislikeFailures = new Map<string, { attempts: number; retryAt: number }>();
 
 function buildCss(p: PlatformSettings): string {
@@ -182,7 +181,6 @@ function upsertBesideStyle(): void {
 }
 
 function redirect(p: PlatformSettings): string | null {
-  // Hide Shorts also blocks /shorts/* pages → bounce to landing or root.
   if (p.features.hideShorts && location.pathname.startsWith('/shorts/')) {
     return resolveLanding(p, ['/shorts/']);
   }
