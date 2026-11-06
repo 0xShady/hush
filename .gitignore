@@ -1,6 +1,7 @@
 node_modules/
 dist/
 web-ext-artifacts/
+test-results/
 *.log
 .DS_Store
 .playwright-mcp/

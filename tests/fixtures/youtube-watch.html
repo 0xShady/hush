@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+  <head><title>YouTube watch fixture</title></head>
+  <body>
+    <ytd-watch-flexy>
+      <div id="columns">
+        <div id="primary">
+          <div id="primary-inner">
+            <div class="html5-video-player">
+              <button class="ytp-autonav-toggle-button" aria-checked="true" data-hidden-by="disableAutoplay">Autoplay</button>
+              <div class="ytp-endscreen-content" data-hidden-by="hideEndScreen">End screen</div>
+              <div class="ytp-ce-element" data-hidden-by="hideEndScreen">End card</div>
+              <div class="ytp-fullscreen-grid" data-keep>Controls grid while playing</div>
+            </div>
+            <div class="html5-video-player ended-mode">
+              <div class="ytp-fullscreen-grid" data-hidden-by="hideEndScreen">Controls grid after the end</div>
+            </div>
+            <ytd-watch-metadata data-keep>
+              <dislike-button-view-model><button>Dislike</button></dislike-button-view-model>
+            </ytd-watch-metadata>
+            <div id="comments" data-keep>Comments</div>
+          </div>
+        </div>
+        <div id="secondary">
+          <div id="secondary-inner">
+            <div id="panels" data-keep>Chat</div>
+            <div id="related" data-hidden-by="hideSidebarRecs">Recommendations</div>
+          </div>
+        </div>
+      </div>
+    </ytd-watch-flexy>
+  </body>
+</html>

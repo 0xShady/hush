@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+  <head><title>Reddit fixture</title></head>
+  <body>
+    <nav>
+      <a href="/" data-keep>Home</a>
+      <faceplate-tracker noun="games_drawer" data-hidden-by="hideGames">Games on Reddit</faceplate-tracker>
+      <faceplate-tracker noun="popular" data-keep>Popular</faceplate-tracker>
+      <a href="/premium" role="button" data-hidden-by="hidePremiumUpsell">Get it now</a>
+      <a href="/r/premium" data-keep>r/premium</a>
+    </nav>
+    <main>
+      <shreddit-ad-post data-hidden-by="hideAds">An ad</shreddit-ad-post>
+      <shreddit-post promoted data-hidden-by="hideAds">A promoted post</shreddit-post>
+      <article data-hidden-by="hideAds"><span>u/example_company</span> <span>Promoted</span> Buy our product</article>
+      <shreddit-comments-page-ad data-hidden-by="hideAds">A comments ad</shreddit-comments-page-ad>
+      <shreddit-post data-keep>
+        <span>r/example</span>
+        <shreddit-award-button data-hidden-by="hideAwards">Award</shreddit-award-button>
+        <span data-testid="award-icon" data-hidden-by="hideAwards">Gold</span>
+      </shreddit-post>
+      <article data-keep>
+        A long post about an example topic that keeps going for a while so that any marker further down sits well
+        past the part of the text that counts as the header of the post, which is the first two hundred characters
+        of it. Promoted
+      </article>
+    </main>
+    <aside>
+      <section data-keep>Community rules</section>
+      <section data-hidden-by="hidePremiumUpsell">Try Premium today</section>
+      <shreddit-sidebar-ad data-hidden-by="hideAds">A sidebar ad</shreddit-sidebar-ad>
+      <shreddit-gold-upsell data-hidden-by="hidePremiumUpsell">Gold</shreddit-gold-upsell>
+    </aside>
+  </body>
+</html>

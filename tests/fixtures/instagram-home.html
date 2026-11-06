@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+  <head><title>Instagram fixture</title></head>
+  <body>
+    <nav>
+      <a href="/" data-keep>Home</a>
+      <a href="/reels/" data-hidden-by="hideReels">Reels</a>
+      <a href="/explore/" data-keep>Explore</a>
+    </nav>
+    <main>
+      <section>
+        <div>
+          <div data-hidden-by="hideStories">
+            <div role="presentation">
+              <ul>
+                <li><canvas width="40" height="40"></canvas></li>
+              </ul>
+            </div>
+            <button>Next</button>
+          </div>
+        </div>
+        <div>
+          <article data-keep>
+            <div><span>example_person</span></div>
+            <div><span>A photo with a poll</span></div>
+            <ul>
+              <li><canvas width="40" height="40"></canvas></li>
+            </ul>
+          </article>
+          <article data-hidden-by="hideAds">
+            <div><span>example_company</span><span>Ad</span></div>
+            <div><span>Buy our product</span></div>
+          </article>
+          <article data-hidden-by="hideAds">
+            <div><span>example_societe</span><span>Sponsorisé</span></div>
+            <div><span>Achetez notre produit</span></div>
+          </article>
+          <article data-hidden-by="hideSuggested">
+            <div><span>example_stranger</span><span>Suggested for you</span></div>
+            <div><span>A photo</span></div>
+          </article>
+          <article data-hidden-by="hideReelsInFeed">
+            <div><span>example_reel</span></div>
+            <a href="/reels/abc123/">A reel</a>
+          </article>
+          <article data-hidden-by="hideReelsInFeed">
+            <div><span>example_audio</span></div>
+            <a href="/reels/audio/abc123/">Original audio</a>
+          </article>
+          <article data-keep>
+            <div><span>example_person</span></div>
+            <div>
+              <span>one</span><span>two</span><span>three</span><span>four</span><span>five</span><span>six</span>
+              <span>seven</span><span>eight</span><span>nine</span><span>ten</span><span>eleven</span><span>twelve</span>
+              <span>Ad</span>
+            </div>
+          </article>
+          <article data-keep>
+            <div><span>example_person</span></div>
+            <div><span>Ad astra per aspera</span></div>
+          </article>
+        </div>
+        <div>
+          <div data-hidden-by="hideSuggested">
+            <div><span>Suggested for you</span><a href="/explore/people/">See all</a></div>
+            <div>
+              <img width="32" height="32" alt="" />
+              <img width="32" height="32" alt="" />
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
