@@ -59,9 +59,7 @@ jobs:
       - name: Chrome Web Store
         if: env.PRERELEASE != 'true' && vars.CWS_EXTENSION_ID != ''
         env:
-          CWS_CLIENT_ID: ${{ secrets.CWS_CLIENT_ID }}
-          CWS_CLIENT_SECRET: ${{ secrets.CWS_CLIENT_SECRET }}
-          CWS_REFRESH_TOKEN: ${{ secrets.CWS_REFRESH_TOKEN }}
+          CWS_SERVICE_ACCOUNT_KEY: ${{ secrets.CWS_SERVICE_ACCOUNT_KEY }}
           CWS_PUBLISHER_ID: ${{ vars.CWS_PUBLISHER_ID }}
           CWS_EXTENSION_ID: ${{ vars.CWS_EXTENSION_ID }}
         run: sh scripts/publish-chrome.sh web-ext-artifacts/chrome/hush-chrome-${TAG#v}.zip

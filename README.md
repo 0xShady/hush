@@ -108,8 +108,8 @@ up-to-date `main`, `npm run release` creates GitHub Release `vX.Y.Z` and the `Re
 `npm run release -- rc.1` makes a pre-release: zips attached, nothing sent to the stores.
 The very first version of each listing is uploaded by hand from the release assets.
 
-Secrets: `CWS_CLIENT_ID`, `CWS_CLIENT_SECRET`, `CWS_REFRESH_TOKEN`, `AMO_JWT_ISSUER`,
-`AMO_JWT_SECRET`. Variables: `CWS_PUBLISHER_ID`, `CWS_EXTENSION_ID`, `AMO_PUBLISH`.
+Secrets: `CWS_SERVICE_ACCOUNT_KEY` (the JSON key of the service account linked to the publisher),
+`AMO_JWT_ISSUER`, `AMO_JWT_SECRET`. Variables: `CWS_PUBLISHER_ID`, `CWS_EXTENSION_ID`, `AMO_PUBLISH`.
 
 ## Architecture
 
