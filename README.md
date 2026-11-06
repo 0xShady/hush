@@ -1,15 +1,54 @@
-# Hush
+<p align="center">
+  <img src="public/icons/icon-128.png" width="96" height="96" alt="Hush logo">
+</p>
 
-Browser extension for Chrome and Firefox that hides parts of YouTube, Instagram, X, Reddit and
-LinkedIn, from a popup with per-site switches and a landing page choice. No analytics, no backend:
-it changes the page in your browser and keeps your settings in `storage.sync`.
+<h1 align="center">Hush</h1>
 
-Website: https://hush-media.dev
+<p align="center">
+  <strong>Keep what you came for. Hush the rest.</strong><br>
+  A free browser extension that hides Shorts, Reels, ads and suggestions on YouTube, X, Reddit, LinkedIn and Instagram.
+</p>
 
-## Install
+<p align="center">
+  <a href="https://chromewebstore.google.com/detail/hush-quiet-your-social-fe/geghioemfiedfkmganbkgapajhphecfo"><img alt="Chrome Web Store version" src="https://img.shields.io/chrome-web-store/v/geghioemfiedfkmganbkgapajhphecfo?label=chrome%20web%20store&color=1f6f65"></a>
+  <a href="https://chromewebstore.google.com/detail/hush-quiet-your-social-fe/geghioemfiedfkmganbkgapajhphecfo"><img alt="Chrome Web Store users" src="https://img.shields.io/chrome-web-store/users/geghioemfiedfkmganbkgapajhphecfo?label=chrome%20users&color=1f6f65"></a>
+  <a href="https://addons.mozilla.org/firefox/addon/hush-quiet-your-social-feeds/"><img alt="Firefox Add-ons version" src="https://img.shields.io/amo/v/hush-quiet-your-social-feeds?label=firefox%20add-ons&color=1f6f65"></a>
+  <a href="https://addons.mozilla.org/firefox/addon/hush-quiet-your-social-feeds/"><img alt="Firefox users" src="https://img.shields.io/amo/users/hush-quiet-your-social-feeds?label=firefox%20users&color=1f6f65"></a>
+  <br>
+  <a href="https://github.com/0xShady/hush/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/0xShady/hush?color=1f6f65"></a>
+  <a href="https://github.com/0xShady/hush/actions/workflows/check.yml"><img alt="CI status" src="https://img.shields.io/github/actions/workflow/status/0xShady/hush/check.yml?branch=main&label=ci"></a>
+  <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/github/license/0xShady/hush?color=1f6f65"></a>
+</p>
 
-- **Chrome and other Chromium browsers**: [Chrome Web Store](https://chromewebstore.google.com/detail/hush-quiet-your-social-fe/geghioemfiedfkmganbkgapajhphecfo)
-- **Firefox**: coming soon
+<p align="center">
+  <a href="https://chromewebstore.google.com/detail/hush-quiet-your-social-fe/geghioemfiedfkmganbkgapajhphecfo">Add to Chrome</a> ·
+  <a href="https://addons.mozilla.org/firefox/addon/hush-quiet-your-social-feeds/">Add to Firefox</a> ·
+  <a href="https://hush-media.dev">Website</a> ·
+  <a href="https://hush-media.dev/docs">Docs</a>
+</p>
+
+![Before and after Hush on a made-up video page](store/screenshots/hush-screenshot-1.png)
+
+## What it hides
+
+Open the popup, pick a site, flip a switch: that part of the page disappears right away, without a
+reload. Turn the switch off and it comes back.
+
+| Site | Switches |
+|---|---|
+| YouTube | Shorts, home feed, sidebar recommendations, end screen, autoplay, Games, Subscriptions list. Also comments beside the video and an optional dislike count |
+| X | Promoted posts, Trending, Who to follow, Grok. Also opens on your Following feed |
+| Reddit | Promoted posts, awards, Premium upsells, video autoplay, Games |
+| LinkedIn | Promoted posts, People you may know, Today's puzzles, Premium upsells |
+| Instagram | Reels, Stories, suggested posts and accounts, ads |
+
+You can also choose the page each site opens on, and turn Hush off for a whole site.
+
+![The Hush popup in light and dark](store/screenshots/hush-screenshot-3.png)
+
+No account, no analytics, no ads, no server. Your switches stay in your browser's extension storage.
+
+Hush is an independent project, not affiliated with YouTube, X, Reddit, LinkedIn or Instagram.
 
 ## Install (dev)
 
