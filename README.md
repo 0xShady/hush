@@ -73,6 +73,7 @@ npm run build          # → dist/chrome + dist/firefox (both Manifest V3)
 | `npm run lint:firefox` | `web-ext lint` on the Firefox build (what addons.mozilla.org runs) |
 | `npm run dev:chrome` | Watch build with an auto-reloading dev worker and a settings bridge for end-to-end tests (dev only) |
 | `npm run start:chrome` / `start:firefox` | Run the build in a separate browser profile with `web-ext`. For a Chromium browser other than Chrome, set `WEB_EXT_CHROMIUM_BINARY` to its path |
+| `npm run bump 1.2.3` | Set the version everywhere and add its `CHANGELOG.md` section |
 | `npm run release` | Create the GitHub Release for the version in `package.json` (from an up-to-date `main`) |
 
 ## Building from source (for add-on reviewers)
@@ -97,9 +98,10 @@ The source archive attached to each release is `git archive` of the tagged commi
 
 ## Releasing
 
-A PR bumps the version in `package.json`, `manifest.chrome.json` and
-`manifest.firefox.json` (CI rejects a tag that does not match all three). Then, on a clean,
-up-to-date `main`, `npm run release` creates GitHub Release `vX.Y.Z` and the `Release` workflow:
+`npm run bump 1.2.3` sets the version in `package.json`, `package-lock.json` and both manifests
+(CI rejects a tag that does not match them) and adds a section to `CHANGELOG.md`. Fill it in and
+merge that as a PR. Then, on a clean, up-to-date `main`, `npm run release` creates GitHub Release
+`vX.Y.Z` with that section as its notes, and the `Release` workflow:
 
 1. builds and lints both targets, and attaches the two zips plus the source archive to the release;
 2. uploads the Chrome zip and submits it for review (Chrome Web Store API v2), when the repo
