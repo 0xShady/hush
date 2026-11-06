@@ -7,12 +7,12 @@ git fetch -q origin main
 [ "$(git rev-parse HEAD)" = "$(git rev-parse origin/main)" ] || { echo "main is not up to date with origin."; exit 1; }
 [ -z "$(git status --porcelain)" ] || { echo "Commit or stash your changes first."; exit 1; }
 
-previous=$(gh release list --exclude-pre-releases --limit 1 --json tagName --jq '.[0].tagName // empty')
-
 if [ $# -gt 0 ]; then
 	gh release create "$version-$1" --target main --generate-notes --prerelease --title "$version-$1"
-elif [ -n "$previous" ]; then
-	gh release create "$version" --target main --generate-notes --notes-start-tag "$previous" --title "$version"
-else
-	gh release create "$version" --target main --generate-notes --title "$version"
+	exit
 fi
+
+notes=$(awk -v heading="## ${version#v} " '/^## / { if (found) exit; found = index($0, heading) == 1; next } found' CHANGELOG.md | sed '/^[[:space:]]*-*[[:space:]]*$/d')
+[ -n "$notes" ] || { echo "CHANGELOG.md has no notes for ${version#v}."; exit 1; }
+
+printf '%s\n' "$notes" | gh release create "$version" --target main --notes-file - --title "$version"

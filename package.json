@@ -32,7 +32,8 @@
     "release": "sh scripts/release.sh",
     "lint": "eslint .",
     "build:test": "TEST_BUILD=1 TARGET=chrome vite build",
-    "test": "npm run build:test && playwright test"
+    "test": "npm run build:test && playwright test",
+    "bump": "sh scripts/bump.sh"
   },
   "dependencies": {
     "webextension-polyfill": "^0.12.0"
