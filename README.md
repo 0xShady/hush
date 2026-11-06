@@ -9,7 +9,7 @@ Website: https://hush-media.dev
 ## Install
 
 - **Chrome and other Chromium browsers**: [Chrome Web Store](https://chromewebstore.google.com/detail/hush-quiet-your-social-fe/geghioemfiedfkmganbkgapajhphecfo)
-- **Firefox**: coming soon
+- **Firefox**: [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/hush-quiet-your-social-feeds/)
 
 ## Install (dev)
 
