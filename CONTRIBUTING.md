@@ -44,6 +44,7 @@ The README explains how the code is laid out and how a content script works.
 ## Before you open a pull request
 
 ```bash
+npm run lint
 npm run typecheck
 npm run build
 npm run lint:firefox
