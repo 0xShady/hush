@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Hush: quiet your social feeds",
   "short_name": "Hush",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Hide Shorts, Reels, ads, suggestions and other noise on YouTube, X, Reddit, LinkedIn and Instagram. No account, no tracking.",
   "icons": {
     "16": "icons/icon-16.png",
