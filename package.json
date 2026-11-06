@@ -29,15 +29,20 @@
     "package:chrome": "web-ext build -s dist/chrome -a web-ext-artifacts/chrome --filename hush-chrome-{version}.zip --ignore-files dev-build.json --overwrite-dest",
     "package:firefox": "web-ext build -s dist/firefox -a web-ext-artifacts/firefox --filename hush-firefox-{version}.zip --overwrite-dest",
     "lint:firefox": "web-ext lint -s dist/firefox",
-    "release": "sh scripts/release.sh"
+    "release": "sh scripts/release.sh",
+    "lint": "eslint ."
   },
   "dependencies": {
     "webextension-polyfill": "^0.12.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.4",
     "@samrum/vite-plugin-web-extension": "^5.1.1",
     "@types/webextension-polyfill": "^0.12.1",
+    "eslint": "^9.39.4",
+    "globals": "^17.14.0",
     "typescript": "^5.6.3",
+    "typescript-eslint": "^8.72.1",
     "vite": "^7.3.7",
     "web-ext": "^10.8.0"
   },
@@ -45,6 +50,9 @@
     "@samrum/vite-plugin-web-extension": {
       "vite": "$vite",
       "content-security-policy-parser": "^0.6.0"
+    },
+    "@typescript-eslint/typescript-estree": {
+      "minimatch": "^11.0.1"
     }
   }
 }
