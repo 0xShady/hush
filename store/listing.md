@@ -13,7 +13,7 @@ Hide Shorts, Reels, ads, suggestions and other noise on YouTube, X, Reddit, Link
 
 ## Description
 
-Paste `docs/store/description.txt` (one line per paragraph: the stores keep every line break).
+Paste `store/description.txt` (one line per paragraph: the stores keep every line break).
 
 ## Category
 
@@ -58,7 +58,7 @@ Certify:
 ## Images
 
 - Icon: 128x128 (`public/icons/icon-128.png`, 96px art on 16px padding).
-- Screenshots: `docs/store/screenshots/hush-screenshot-1..4.png` (1280x800, RGB): before/after on the site's
+- Screenshots: `store/screenshots/hush-screenshot-1..4.png` (1280x800, RGB): before/after on the site's
   made-up demo page, the YouTube switches, three popups (light and dark), privacy. No real posts from any
   site.
 - Promo tiles: `screenshots/hush-promo-small-440x280.png` (shown in search and category lists) and `screenshots/hush-promo-marquee-1400x560.png` (used if the store features Hush).

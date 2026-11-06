@@ -27,7 +27,7 @@
   <a href="https://hush-media.dev/docs">Docs</a>
 </p>
 
-![Before and after Hush on a made-up video page](docs/store/screenshots/hush-screenshot-1.png)
+![Before and after Hush on a made-up video page](store/screenshots/hush-screenshot-1.png)
 
 ## What it hides
 
@@ -44,7 +44,7 @@ reload. Turn the switch off and it comes back.
 
 You can also choose the page each site opens on, and turn Hush off for a whole site.
 
-![The Hush popup in light and dark](docs/store/screenshots/hush-screenshot-3.png)
+![The Hush popup in light and dark](store/screenshots/hush-screenshot-3.png)
 
 No account, no analytics, no ads, no server. Your switches stay in your browser's extension storage.
 
@@ -179,5 +179,5 @@ The code is under the [MIT License](LICENSE). Instrument Sans is under the
 [SIL Open Font License](public/licenses/InstrumentSans-OFL.txt).
 
 The MIT License covers the code, not the Hush name or logo (`src/assets/icons/`, `public/icons/` and
-the images in `docs/store/`). You are welcome to fork Hush, but if you publish a fork, give it its own
+the images in `store/`). You are welcome to fork Hush, but if you publish a fork, give it its own
 name and icon so nobody mistakes it for Hush.
