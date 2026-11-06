@@ -48,7 +48,14 @@ npm run lint
 npm run typecheck
 npm run build
 npm run lint:firefox
+npm test
 ```
+
+`npm test` needs a browser once: `npx playwright install chromium`. It loads the extension in Chromium
+on the hand-written pages in `tests/fixtures/`. In those pages, `data-hidden-by="hideAds"` marks what a
+switch must hide and `data-keep` marks what must stay. A new switch or selector needs a matching element
+there. Keep real names and posts out of fixtures. The tests can't tell you a site changed its markup, so
+still try your change on the live site.
 
 Keep one change per pull request, and say which site, switch and browser you tested. When you add a
 screenshot, use your own test account or crop it, so nobody's feed or name ends up in the repo.

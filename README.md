@@ -67,6 +67,7 @@ npm run build          # → dist/chrome + dist/firefox (both Manifest V3)
 | `npm run build` | Build both Chrome + Firefox into `dist/` |
 | `npm run build:chrome` / `build:firefox` | Single target |
 | `npm run lint` | ESLint on the source |
+| `npm test` | Build a test copy and run the Playwright tests against the saved pages in `tests/fixtures/` |
 | `npm run typecheck` | `tsc --noEmit` |
 | `npm run package` | Build then zip both via `web-ext` → `web-ext-artifacts/{chrome,firefox}/hush-<browser>-<version>.zip` |
 | `npm run lint:firefox` | `web-ext lint` on the Firefox build (what addons.mozilla.org runs) |

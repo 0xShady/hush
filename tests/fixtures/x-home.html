@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+  <head><title>X fixture</title></head>
+  <body>
+    <nav>
+      <a href="/home" data-keep>Home</a>
+      <a href="/i/grok" data-hidden-by="hideGrok">Grok</a>
+    </nav>
+    <div data-testid="primaryColumn">
+      <div role="tablist">
+        <a role="tab" aria-selected="true">For you</a>
+        <a role="tab" aria-selected="false">Following</a>
+      </div>
+      <div data-testid="cellInnerDiv" data-hidden-by="hideAds">
+        <article data-testid="tweet">
+          <div><span>Example company</span></div>
+          <div data-testid="tweetText"><span>Buy our product</span></div>
+          <div><span>Ad</span></div>
+        </article>
+      </div>
+      <div data-testid="cellInnerDiv" data-hidden-by="hideAds">
+        <article data-testid="tweet">
+          <div><span>Example société</span></div>
+          <div data-testid="tweetText"><span>Achetez notre produit</span></div>
+          <div><span>Sponsorisé</span></div>
+        </article>
+      </div>
+      <div data-testid="cellInnerDiv" data-keep>
+        <article data-testid="tweet">
+          <div><span>Example person</span></div>
+          <div data-testid="tweetText"><span>Ad</span></div>
+        </article>
+      </div>
+      <div data-testid="cellInnerDiv" data-keep>
+        <article data-testid="tweet">
+          <div><span>Example person</span></div>
+          <div data-testid="tweetText"><span>This Ad made me laugh</span></div>
+        </article>
+      </div>
+    </div>
+    <div data-testid="sidebarColumn">
+      <div data-keep><input aria-label="Search" /></div>
+      <div data-hidden-by="hideTrending">
+        <section><div data-testid="trend">Example trend</div></section>
+      </div>
+      <div data-hidden-by="hideTrending">
+        <div data-testid="news_sidebar">Today's news</div>
+      </div>
+      <div data-hidden-by="hideWhoToFollow">
+        <div>
+          <aside><div data-testid="UserCell">Example account</div></aside>
+        </div>
+      </div>
+      <div data-keep><a href="/tos">Terms of service</a></div>
+    </div>
+    <div data-testid="GrokDrawer" data-hidden-by="hideGrok">Grok drawer</div>
+    <button aria-label="Grok actions" data-hidden-by="hideGrok">Grok actions</button>
+  </body>
+</html>

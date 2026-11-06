@@ -10,7 +10,8 @@ type Target = 'chrome' | 'firefox';
 
 const target = (process.env.TARGET as Target) || 'chrome';
 const devReload = target === 'chrome' && process.env.DEV_RELOAD === '1';
-const outDir = `dist/${target}`;
+const testBuild = process.env.TEST_BUILD === '1';
+const outDir = testBuild ? 'dist/test' : `dist/${target}`;
 
 const manifest = target === 'firefox'
   ? firefoxManifest
@@ -34,7 +35,7 @@ function buildIdStamp(): Plugin {
 
 export default defineConfig({
   define: {
-    __HUSH_DEV__: JSON.stringify(devReload),
+    __HUSH_DEV__: JSON.stringify(devReload || testBuild),
   },
   plugins: [
     webExtension({

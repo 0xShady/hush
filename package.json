@@ -30,13 +30,16 @@
     "package:firefox": "web-ext build -s dist/firefox -a web-ext-artifacts/firefox --filename hush-firefox-{version}.zip --overwrite-dest",
     "lint:firefox": "web-ext lint -s dist/firefox",
     "release": "sh scripts/release.sh",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "build:test": "TEST_BUILD=1 TARGET=chrome vite build",
+    "test": "npm run build:test && playwright test"
   },
   "dependencies": {
     "webextension-polyfill": "^0.12.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
+    "@playwright/test": "^1.65.0",
     "@samrum/vite-plugin-web-extension": "^5.1.1",
     "@types/webextension-polyfill": "^0.12.1",
     "eslint": "^9.39.4",
