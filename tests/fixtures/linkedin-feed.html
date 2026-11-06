@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+  <head><title>LinkedIn fixture</title></head>
+  <body>
+    <div data-testid="primary-nav">
+      <a href="/feed/" data-keep>Home</a>
+      <a href="/premium/" data-hidden-by="hidePremiumUpsell">Try Premium for free</a>
+      <div role="button" data-keep>Me</div>
+      <a href="/news/" data-keep>A very long navigation label that happens to mention Premium in it</a>
+    </div>
+    <aside aria-label="Profile">
+      <div>
+        <div data-keep><p>Example person</p></div>
+        <div data-hidden-by="hidePremiumUpsell"><p>See who viewed your profile</p></div>
+      </div>
+    </aside>
+    <div data-testid="mainFeed">
+      <div role="listitem" componentkey="update-card-1" data-hidden-by="hideAds">
+        <p>Example company</p>
+        <span>Promoted</span>
+        <p>Buy our product</p>
+      </div>
+      <div role="listitem" componentkey="update-card-2" data-hidden-by="hideAds">
+        <p>Example société</p>
+        <span>Sponsorisé</span>
+        <p>Achetez notre produit</p>
+      </div>
+      <div role="listitem" componentkey="update-card-3" data-keep>
+        <p>Example person</p>
+        <p>I was Promoted to manager</p>
+        <p>People you may know should read this post</p>
+      </div>
+      <div role="listitem" componentkey="update-card-4" data-keep>
+        <p>1</p><p>2</p><p>3</p><p>4</p><p>5</p><p>6</p><p>7</p><p>8</p>
+        <p>9</p><p>10</p><p>11</p><p>12</p><p>13</p><p>14</p><p>15</p>
+        <p>Promoted</p>
+      </div>
+      <div role="listitem" componentkey="suggestions-1" data-hidden-by="hidePeopleYouMayKnow">
+        <div><p>People you may know</p></div>
+        <div><p>Example person</p></div>
+      </div>
+      <div role="listitem" componentkey="upsell-1" data-hidden-by="hidePremiumUpsell">
+        <p>Unlock more with a free Premium trial</p>
+      </div>
+    </div>
+    <aside aria-label="Suggestions">
+      <div>
+        <div data-keep><p>LinkedIn News</p></div>
+        <div data-hidden-by="hidePeopleYouMayKnow">
+          <div><p>Add to your feed</p></div>
+          <div><p>Example company</p></div>
+        </div>
+        <div data-hidden-by="hidePuzzles">
+          <p>Today’s puzzles</p>
+          <p>Example puzzle</p>
+        </div>
+        <div componentkey="feedRightNavGamesComponentRef" data-hidden-by="hidePuzzles">Games</div>
+        <div data-hidden-by="hideAds"><iframe componentkey="abc_ad"></iframe></div>
+        <div data-hidden-by="hideAds">
+          <span>Promoted</span>
+          <p>Example company</p>
+        </div>
+        <div data-keep><a href="/legal">About</a></div>
+      </div>
+    </aside>
+  </body>
+</html>
